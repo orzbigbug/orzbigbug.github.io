@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://orzbigbug.github.io</id>
     <title>BIGBUG&apos;s blog</title>
-    <updated>2021-04-17T01:47:44.642Z</updated>
+    <updated>2021-04-17T01:55:46.565Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://orzbigbug.github.io"/>
     <link rel="self" href="https://orzbigbug.github.io/atom.xml"/>
@@ -11,11 +11,268 @@
     <icon>https://orzbigbug.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, BIGBUG&apos;s blog</rights>
     <entry>
+        <title type="html"><![CDATA[CF911E  【Stack Sorting】]]></title>
+        <id>https://orzbigbug.github.io/post/cf911e-stack-sorting/</id>
+        <link href="https://orzbigbug.github.io/post/cf911e-stack-sorting/">
+        </link>
+        <updated>2021-03-30T08:51:15.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="题目大意">题目大意</h3>
+<p>一个排列有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个数，经过一个栈调整顺序之后能够按<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1-n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>顺序输出。给出它的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，要补全整个排列，且使其字典序最大。</p>
+<hr>
+<p>这里我们由一个数据开始探究：</p>
+<pre><code>10 6
+1 3 2 9 4 7
+</code></pre>
+<p>根据题意，给出的会是排列的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，所以直接输出。</p>
+<p>可以对给出的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数进行处理，把可以整理的数直接整理。</p>
+<p>模拟输入之后可以发现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">1-4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>已经整理好了，栈中剩下两个数<code>9 7</code>。</p>
+<p>如果这时候栈中不是一个下降的序列，可以发现此时无解，直接输出<code>-1</code>。</p>
+<p>对于数据来说，还有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">5-10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>没有输出。</p>
+<p>此时要把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span>给移除的话，必须先输出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">5-6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span>，又要求字典序最大，此时可以从大到小输出。</p>
+<p>于是你发现一个规律，然后你可以用一个生动形象的图来表示它：</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/42bhy5qj.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>于是我们得出了代码：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=200005;
+int n,k,i,j,a[N],b[N],p,d;
+bool f=0;
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
+	for(i=1;i&lt;=k;++i){
+		scanf(&quot;%d&quot;,&amp;a[i]);
+		b[++p]=a[i];
+		while(b[p]==d+1) ++d,--p;
+	}
+	for(i=2;i&lt;=p;++i)
+		if(b[i]&gt;b[i-1]) f=1;
+	if(f) printf(&quot;-1&quot;);
+	else{
+		b[p+1]=d;
+		for(i=1;i&lt;=k;++i) printf(&quot;%d &quot;,a[i]);
+		for(i=p;i&gt;=1;--i)
+			for(j=b[i]-1;j&gt;b[i+1];--j) printf(&quot;%d &quot;,j);
+		for(i=n;i&gt;b[1];--i) printf(&quot;%d &quot;,i);
+	}
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[困兽]]></title>
+        <id>https://orzbigbug.github.io/post/kun-shou/</id>
+        <link href="https://orzbigbug.github.io/post/kun-shou/">
+        </link>
+        <updated>2021-03-27T07:02:03.000Z</updated>
+        <content type="html"><![CDATA[<p>困兽 v1.0.3</p>
+<p>更新の日志：</p>
+<pre><code>3.27 发布
+3.27 修改颜色问题
+3.27 增设平局
+</code></pre>
+<hr>
+<p>腾讯微云：<a href="https://share.weiyun.com/2YNVJFIx">点击这里</a></p>
+<p>百度网盘：<a href="https://pan.baidu.com/s/1wSFDzRIwAufHahP3SH3ELw">点击这里</a> 提取码: m372</p>
+<p>蓝奏云：<a href="https://wws.lanzous.com/iLfeXndpo5a">点击这里</a><br>
+密码:bxso</p>
+<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
+<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
+<hr>
+<h3 id="规则说明">规则说明</h3>
+<p>7*7的棋盘，两个棋手分别操作两个棋子，位于左上角和右下角。双方轮流进行，左上角的棋手先行执行回合。一回合包括：</p>
+<ul>
+<li>将棋子<strong>移动0-3步</strong>。你的移动不应越过一堵墙。注意，你仅可以经过对方所在格而<strong>不能停留在其上</strong>。</li>
+<li>移动完成后，你<strong>可以也必须</strong>在该位置四周选择一个方向建造一堵墙，建造完成后双方经过都将受到阻挡。你可以把墙建在棋盘的边缘处，但你不可以把墙建在已经存在的墙上。</li>
+</ul>
+<p>一名玩家执行完成后，会检查两棋子所在位置是否还<strong>相通</strong>。如果不相通，游戏将结束并进行结算。计算两棋子<strong>可活动范围</strong>，范围较大者将获得胜利。</p>
+<h3 id="操作说明">操作说明</h3>
+<ul>
+<li>使用<code>wasd</code>进行移动。你已行动的步数将被显示。使用<code>k</code>键重置你的行动，你可以重新规划路线。按下<code>l</code>键，你的行动将被记录且不能再更改。</li>
+<li>完成移动后，使用<code>wasd</code>表示你要建的墙方位。在按下<code>l</code>键以前，你可以随时更改之，也可以按<code>k</code>重置建墙。确定以后，按下<code>l</code>键即可。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[弱智的猜数字游戏]]></title>
+        <id>https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/</id>
+        <link href="https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/">
+        </link>
+        <updated>2021-03-19T12:45:17.000Z</updated>
+        <content type="html"><![CDATA[<p>不务正业中...</p>
+<p>正常的猜数字游戏，会告知过大或过小。有一定概率电脑会说谎，说谎次数一定。</p>
+<p>本游戏开源，不更新版本。更改源代码来获得更好的体验！</p>
+<pre><code class="language-cpp">#include&lt;windows.h&gt;
+#include&lt;iostream&gt;
+#include&lt;ctime&gt;
+using namespace std;
+const int N=50;//数字将在1-N之间生成
+const int M=6; //你可以猜数字的次数
+const int C=1; //电脑说谎的次数
+const int A=1;
+const int B=5; //单次说谎的概率为A/B 
+int x,a,i,c;
+bool f;
+int main(){
+	SetConsoleTitle(&quot;——由BIGBUG乱搞而成!&quot;);
+	srand(time(NULL));
+	x=rand()%N+1;c=C;
+	for(i=M;i&gt;=1;--i){
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;你还有&quot;&lt;&lt;i&lt;&lt;&quot;次机会!\n&quot;; 
+		cout&lt;&lt;&quot;猜数字(1-&quot;&lt;&lt;N&lt;&lt;&quot;)：&quot;;
+		cin&gt;&gt;a;
+		if(a!=x) f=a&gt;x;
+		else{cout&lt;&lt;&quot;正确!&quot;;break;}
+		if(c&gt;0&amp;&amp;rand()%B&lt;A) f=!f;
+		printf(&quot;错误!%d过%s了!&quot;,a,f?&quot;大&quot;:&quot;小&quot;);
+		Sleep(2000);
+	}
+	system(&quot;cls&quot;);
+	if(i==0) cout&lt;&lt;&quot;正解是&quot;&lt;&lt;x&lt;&lt;&quot;!&quot;;
+	else cout&lt;&lt;&quot;你成功使用&quot;&lt;&lt;M-i+1&lt;&lt;&quot;次机会猜出了答案!&quot;;
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[三国杀]]></title>
+        <id>https://orzbigbug.github.io/post/san-guo-sha/</id>
+        <link href="https://orzbigbug.github.io/post/san-guo-sha/">
+        </link>
+        <updated>2020-08-18T01:13:54.000Z</updated>
+        <content type="html"><![CDATA[<p>三国杀 v1.3.0</p>
+<p>更新の日志：</p>
+<pre><code>8.17 防具集体出锅
+8.17 顺牵，过拆拿装备时出锅
+8.17 桃的数量多了10张！减了
+8.17 显示错误(人工智障果然智障)
+8.17 对人工智障的研究/强化
+8.18 闪电出锅！一出闪电，必遭雷劈
+8.18 强化人工智障，增加伤害显示
+8.18 改掉麒麟弓BUG，优化显示界面
+8.18 论丈八蛇矛的深入使用,-1使用丈八蛇矛
+10.20 修复了一些问题
+2.5 修复了三个BUG
+</code></pre>
+<p>BUG列表：</p>
+<pre><code>20210205 闪电被无懈后不转移     -xutongwei
+20210205 敌人不能用丈八响应决斗 -xutongwei
+20210205 我方贯石斧不能正常使用 -BIGBUG
+未修复   [杀]被装备为防御马?    -xutongwei
+</code></pre>
+<p>预计の更新：</p>
+<pre><code>1、加入卡牌点数
+2、多人机玩法（误 
+</code></pre>
+<hr>
+<h3 id="标准版">标准版</h3>
+<p>腾讯微云：<a href="https://share.weiyun.com/dtnFqgoM">点击这里</a></p>
+<p>百度网盘：<a href="https://pan.baidu.com/s/1ie9UhxNH0jaDJWJHtyGq0A">点击这里</a> 提取码: nrxv</p>
+<p>蓝奏云：<a href="https://wws.lanzous.com/ib8Lond6ozg">点击这里</a> 密码:5nn1</p>
+<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
+<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[爆炸棋]]></title>
+        <id>https://orzbigbug.github.io/post/bao-zha-qi/</id>
+        <link href="https://orzbigbug.github.io/post/bao-zha-qi/">
+        </link>
+        <updated>2020-07-31T10:10:46.000Z</updated>
+        <content type="html"><![CDATA[<p>爆炸棋 v1.1.1</p>
+<p>应<a href="https://www.luogu.com.cn/user/174557">dove1242</a>的要求，把这个游戏代码实现了。。。</p>
+<p>更新の日志：</p>
+<pre><code>7.24 爆炸棋第一版发布
+7.25 增加提示语
+7.25 改掉了无限爆炸的问题
+8.02 修改参数错误，加快50后爆炸节奏 
+</code></pre>
+<p>腾讯微云：<a href="https://share.weiyun.com/yrKbCKSj">点击这里</a></p>
+<p>百度网盘：<a href="https://pan.baidu.com/s/13BYohueTF8QrwMEoOVJBpw">点击这里</a> 提取码: 1ijx</p>
+<p>蓝奏云：<a href="https://wws.lanzous.com/iQa1Gnd6oxe">点击这里</a><br>
+密码:i02o</p>
+<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
+<p>规则~~（复制警告）~~：</p>
+<p>获胜方法：场上其他人都没有棋子时获胜。<br>
+游戏规则：在棋盘上布置一个棋子，每个棋子都有不一样的引爆数量，俗称“金角银边铜肚皮”，其意思是角落的价值最高，只需要两个棋子就能引爆。引爆后棋子会朝四周四散方块，其他颜色的棋子被我方棋子爆开的碎片打中后会变成没有颜色的空位，如果碎片刚好落到了其他颜色的只剩一个就会引爆的棋子上，则会继续触发引爆，不过颜色变成了你的颜色。控制得到可以引起连环爆炸，反败为胜。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[有意思的东西]]></title>
+        <id>https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/</id>
+        <link href="https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/">
+        </link>
+        <updated>2020-03-25T09:30:26.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/pic/68626.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/pic/69528.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2631292033,154052156&amp;fm=26&amp;gp=0.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://cdn.luogu.com.cn/upload/pic/60889.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[LG1352 【没有上司的舞会】]]></title>
+        <id>https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/</id>
+        <link href="https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/">
+        </link>
+        <updated>2019-12-06T10:41:26.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<p>这题可以看做一颗树，因为不会有人上司的上司是自己。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">d[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人及他的下属的最高快乐指数和。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人的第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>个下属。</p>
+<p>每个人如果选上,他的下属就不能选上，要的就是他下属的下属的最优值，这样就没有直接上司了</p>
+<p>如果不选上，他的下属就可以选上，要他下属的最优值</p>
+<p>考虑继承快乐指数和最大的一种</p>
+<p>代码如下:（不要抄袭）</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+using namespace std;
+const int N=76801;
+int h[6001],n,i,a[6001][5000],x,y,d[6001],m;
+int dfs(int root,int s){
+	if(s==0){
+		if(d[root]==N)
+			d[root]=max(dfs(root,1),dfs(root,2)+h[root]);
+            //继承最好状态
+		return d[root];
+	}
+	int l=0;
+	for(int j=1;j&lt;=a[root][0];j++)
+		l+=dfs(a[root][j],s-1);
+   //枚举他的下属
+	return l;
+}
+int main(){
+	cin&gt;&gt;n;
+	for(i=1;i&lt;=n;i++){
+		cin&gt;&gt;h[i];
+		d[i]=N;
+        //赋初值
+	}	
+	cin&gt;&gt;x&gt;&gt;y;
+	while(x!=0||y!=0){
+		a[y][++a[y][0]]=x;
+		cin&gt;&gt;x&gt;&gt;y;
+	}
+	for(i=1;i&lt;=n;i++){
+		if(d[i]==N)
+			d[i]=dfs(i,0);
+        //枚举顶头上司
+		m=max(m,d[i]);
+	}
+	cout&lt;&lt;m;
+	return 0;	
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[博客索引]]></title>
         <id>https://orzbigbug.github.io/post/bo-ke-suo-yin/</id>
         <link href="https://orzbigbug.github.io/post/bo-ke-suo-yin/">
         </link>
-        <updated>2021-04-17T01:46:08.000Z</updated>
+        <updated>2019-11-10T02:57:44.000Z</updated>
         <content type="html"><![CDATA[<p>快速到达:</p>
 <p><a href="https://orzbigbug.github.io/tag/youxi/">游戏部分</a><br>
 <a href="https://orzbigbug.github.io/tag/gaoxiao/">搞笑部分</a><br>
@@ -29,50 +286,49 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[LG1495 【曹冲养猪】]]></title>
-        <id>https://orzbigbug.github.io/post/lg1495-cao-chong-yang-zhu/</id>
-        <link href="https://orzbigbug.github.io/post/lg1495-cao-chong-yang-zhu/">
+        <title type="html"><![CDATA[朱日和之战]]></title>
+        <id>https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/</id>
+        <link href="https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/">
         </link>
-        <updated>2021-04-17T01:41:15.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="中国剩余定理">中国剩余定理</h1>
-<p>然而作者不会</p>
-<hr>
-<p>看到这题，先用暴力做了一下，死的很惨</p>
-<p>思路：考虑每一次建立猪圈的情况，把前面的最小公倍数求出来，</p>
-<h4 id="一个一个加">一个一个加</h4>
-<p>对，就是这样。</p>
-<p>还有，这题的答案可能很大，int会炸，long long就行了。</p>
-<hr>
-<p>代码：</p>
-<pre><code>#include&lt;algorithm&gt;
-#include&lt;iostream&gt;
-using namespace std;
-long long n,a[11],b[11],i,ans,c;
-//用long long定义
-long long zxgbs(long long a,long long b){
-	return a*b/ __gcd(a,b);
-    //__gcd(a,b):求最大公因数，要algorithm
-}
-//求最小公倍数
-int main(){
-	cin&gt;&gt;n;
-	for(i=1;i&lt;=n;i++)
-		cin&gt;&gt;a[i]&gt;&gt;b[i];
-    //输入部分，不说了
-	c=a[1];ans=b[1];
-    //第一次建立不用循环，直接写进去
-	for(i=2;i&lt;=n;i++)
-	{
-		for(;ans%a[i]!=b[i];) ans+=c;
-        //ans暴力往上加，加到符合这次的标准
-		c=zxgbs(c,a[i]);
-        //用函数把a[i]加进去，后面每次加的都要是这次的倍数
-	}
-	cout&lt;&lt;ans;
-    //输出结果
-	return 0;
-} 
+        <updated>2019-10-05T07:40:32.000Z</updated>
+        <content type="html"><![CDATA[<p>朱日和之战 v1.8.4</p>
+<p>一个多人对战小游戏，增加了不少新颖的元素。有刺激的对战元素，也有有趣的结盟玩法，局势瞬息万变，活到最后的才是赢家。保留BIGBUG游戏的传统风格，由蒟蒻编写。</p>
+<p>更新の日志：</p>
+<pre><code>10.13 增加身份系统
+10.07 增加10级满级 技能改变为资源上限
+10.06 击杀者可获得死亡者的资源
+10.06 技能增加伤害加成
+12.20 战斗、血量等细节调整
+12.20 增加团战模式
+12.21 给资源出错 调整
+12.29 新技能（自己探索）
+12.31 更改机制，优化界面
+12.31 又是新技能
+01.30 技能系统 3个技能
+01.31 更改了1个技能内容
+04.26 双人联机版出现
+04.30 更改了联机版的一个BUG
+06.06 修改了一些小BUG
+06.26 增加了一些信息和标题
+08.25 更改毁伤效果为回血数量减少
+08.25 加强所有技能，具体见官方攻略
+02.21 暂时隐藏联机版
+02.21 英文版
 </code></pre>
+<hr>
+<h1 id="朱日和之战出攻略啦">朱日和之战出攻略啦！</h1>
+<p>-&gt;<a href="https://bigbug-233.blog.luogu.org/shu-ri-hu-zhi-zhan-di-gong-lve">我要攻略！快给我</a>&lt;-</p>
+<h3 id="标准版">标准版</h3>
+<p>腾讯微云：<a href="https://share.weiyun.com/7YntS8fp">点击这里</a></p>
+<p>百度网盘：<a href="https://pan.baidu.com/s/1Anjs_cm7Q15ghUyeNpLHuw">点击这里</a> 提取码: 63gv</p>
+<p>蓝奏云：<a href="https://wws.lanzous.com/iUAxwnd6p0h">点击这里</a><br>
+密码:4sv0</p>
+<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
+<hr>
+<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
+<p><a href="https://wj.qq.com/s2/5238404/5987/">一份问卷调查</a></p>
+<p><a href="https://share.weiyun.com/5IJ7wOo-g">可以加入共享组</a></p>
+<p>//联机版好像只能在内网里面连接</p>
 ]]></content>
     </entry>
     <entry>
@@ -80,7 +336,7 @@ int main(){
         <id>https://orzbigbug.github.io/post/lg1359-zu-yong-you-ting/</id>
         <link href="https://orzbigbug.github.io/post/lg1359-zu-yong-you-ting/">
         </link>
-        <updated>2021-04-17T01:39:35.000Z</updated>
+        <updated>2019-07-30T06:11:26.000Z</updated>
         <content type="html"><![CDATA[<p>这道题是一道dp题，。</p>
 <hr>
 <p>首先，我们要先存图。</p>
@@ -160,585 +416,6 @@ int main(){
 }
 </code></pre>
 <p>PS：蒟蒻的题解，大佬勿喷！<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mi>w</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">qwq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LG1352 【没有上司的舞会】]]></title>
-        <id>https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/</id>
-        <link href="https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/">
-        </link>
-        <updated>2021-04-17T01:37:42.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<p>这题可以看做一颗树，因为不会有人上司的上司是自己。</p>
-<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">d[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人及他的下属的最高快乐指数和。</p>
-<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人的第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>个下属。</p>
-<p>每个人如果选上,他的下属就不能选上，要的就是他下属的下属的最优值，这样就没有直接上司了</p>
-<p>如果不选上，他的下属就可以选上，要他下属的最优值</p>
-<p>考虑继承快乐指数和最大的一种</p>
-<p>代码如下:（不要抄袭）</p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-using namespace std;
-const int N=76801;
-int h[6001],n,i,a[6001][5000],x,y,d[6001],m;
-int dfs(int root,int s){
-	if(s==0){
-		if(d[root]==N)
-			d[root]=max(dfs(root,1),dfs(root,2)+h[root]);
-            //继承最好状态
-		return d[root];
-	}
-	int l=0;
-	for(int j=1;j&lt;=a[root][0];j++)
-		l+=dfs(a[root][j],s-1);
-   //枚举他的下属
-	return l;
-}
-int main(){
-	cin&gt;&gt;n;
-	for(i=1;i&lt;=n;i++){
-		cin&gt;&gt;h[i];
-		d[i]=N;
-        //赋初值
-	}	
-	cin&gt;&gt;x&gt;&gt;y;
-	while(x!=0||y!=0){
-		a[y][++a[y][0]]=x;
-		cin&gt;&gt;x&gt;&gt;y;
-	}
-	for(i=1;i&lt;=n;i++){
-		if(d[i]==N)
-			d[i]=dfs(i,0);
-        //枚举顶头上司
-		m=max(m,d[i]);
-	}
-	cout&lt;&lt;m;
-	return 0;	
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LG1625 【求和】]]></title>
-        <id>https://orzbigbug.github.io/post/lg1625-qiu-he/</id>
-        <link href="https://orzbigbug.github.io/post/lg1625-qiu-he/">
-        </link>
-        <updated>2021-04-17T01:36:24.000Z</updated>
-        <content type="html"><![CDATA[<p>已经求得</p>
-<p>原式<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>(</mo><mfrac><mn>1</mn><mrow><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mi>i</mi></mrow></mfrac><mo>−</mo><mfrac><mn>1</mn><mrow><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mi>i</mi></mrow></mfrac><mo>)</mo></mrow><annotation encoding="application/x-tex">=\dfrac{1}{m+1}(\dfrac{1}{\prod_{i=1}^{m-1}i}-\dfrac{1}{\prod_{i=n+1}^{n+m-1}i})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.4651579999999997em;vertical-align:-1.143718em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.155992em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.143718em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.523489em;vertical-align:-1.2020490000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.155992em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35804100000000005em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2020490000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span></span></p>
-<p>计算这个分数需要高精，所以可以使用python3</p>
-<p>可以发现，两个求积公式可以一起进行计算</p>
-<p>得到代码：</p>
-<pre><code>import math
-n,m=map(int,input().split())
-a=1
-b=1
-for i in range(1,m):
-    a*=i
-    b*=i+n
-x=b-a
-y=a*b*(m-1)
-t=math.gcd(x,y)
-x//=t
-y//=t
-print(x)
-print(y)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CF911E  【Stack Sorting】]]></title>
-        <id>https://orzbigbug.github.io/post/cf911e-stack-sorting/</id>
-        <link href="https://orzbigbug.github.io/post/cf911e-stack-sorting/">
-        </link>
-        <updated>2021-04-17T01:35:33.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="题目大意">题目大意</h3>
-<p>一个排列有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个数，经过一个栈调整顺序之后能够按<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1-n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>顺序输出。给出它的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，要补全整个排列，且使其字典序最大。</p>
-<hr>
-<p>这里我们由一个数据开始探究：</p>
-<pre><code>10 6
-1 3 2 9 4 7
-</code></pre>
-<p>根据题意，给出的会是排列的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，所以直接输出。</p>
-<p>可以对给出的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数进行处理，把可以整理的数直接整理。</p>
-<p>模拟输入之后可以发现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">1-4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>已经整理好了，栈中剩下两个数<code>9 7</code>。</p>
-<p>如果这时候栈中不是一个下降的序列，可以发现此时无解，直接输出<code>-1</code>。</p>
-<p>对于数据来说，还有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">5-10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>没有输出。</p>
-<p>此时要把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span>给移除的话，必须先输出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">5-6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span>，又要求字典序最大，此时可以从大到小输出。</p>
-<p>于是你发现一个规律，然后你可以用一个生动形象的图来表示它：</p>
-<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/42bhy5qj.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
-<p>于是我们得出了代码：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int N=200005;
-int n,k,i,j,a[N],b[N],p,d;
-bool f=0;
-int main(){
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
-	for(i=1;i&lt;=k;++i){
-		scanf(&quot;%d&quot;,&amp;a[i]);
-		b[++p]=a[i];
-		while(b[p]==d+1) ++d,--p;
-	}
-	for(i=2;i&lt;=p;++i)
-		if(b[i]&gt;b[i-1]) f=1;
-	if(f) printf(&quot;-1&quot;);
-	else{
-		b[p+1]=d;
-		for(i=1;i&lt;=k;++i) printf(&quot;%d &quot;,a[i]);
-		for(i=p;i&gt;=1;--i)
-			for(j=b[i]-1;j&gt;b[i+1];--j) printf(&quot;%d &quot;,j);
-		for(i=n;i&gt;b[1];--i) printf(&quot;%d &quot;,i);
-	}
-	return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[有意思的东西]]></title>
-        <id>https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/</id>
-        <link href="https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/">
-        </link>
-        <updated>2021-04-17T01:29:43.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/pic/68626.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/pic/69528.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2631292033,154052156&amp;fm=26&amp;gp=0.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="https://cdn.luogu.com.cn/upload/pic/60889.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[斗图武器库]]></title>
-        <id>https://orzbigbug.github.io/post/dou-tu-wu-qi-ku/</id>
-        <link href="https://orzbigbug.github.io/post/dou-tu-wu-qi-ku/">
-        </link>
-        <updated>2021-04-17T01:25:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="不想说什么">不想说什么。</h1>
-<figure data-type="image" tabindex="1"><img src="http://www.gaoxiaogif.com/d/file/ae66749fb951cf4e76e5a1bdf4c40b6d.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://i.loli.net/2018/05/20/5b017efd253bd.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://s1.ax1x.com/2018/04/04/C9AddU.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=fc8877fa8601a18bf0eb1247ae2e0761/be452cd162d9f2d32070d539a8ec8a136227cc31.jpg?v=tbs" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="5"><img src="https://ws1.sinaimg.cn/large/006qPc7jgy1ft3a3ypd08j30im0gowh0.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="6"><img src="https://i.loli.net/2018/07/16/5b4c9b08c2c39.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="7"><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1fts4vidd2rg308c04oqv5.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="8"><img src="https://i.loli.net/2018/07/30/5b5e8aa36882d.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="9"><img src="https://s1.ax1x.com/2018/04/03/CpivNj.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="10"><img src="https://s1.ax1x.com/2018/04/02/9zRlSU.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="11"><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftbkdnuyemg308c0567wh.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="12"><img src="https://i.loli.net/2018/07/12/5b4728e09e732.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="13"><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftn0wnadqfg308c056u0x.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="14"><img src="https://cdn.luogu.com.cn/upload/pic/26328.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="15"><img src="http://img5.2345.com/duoteimg/zixunImg/local/2017/07/27/15011324826582.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="16"><img src="https://i.loli.net/2018/08/16/5b754bc61aa55.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="17"><img src="http://wx3.sinaimg.cn/mw690/0060lm7Tly1fubtyqs43pg306o03q1jh.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="18"><img src="https://t1.picb.cc/uploads/2018/05/09/2hwloe.md.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="19"><img src="https://i.loli.net/2018/05/23/5b0535ffd78fb.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="20"><img src="http://f.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a132e9abfe0f703918fa0ecc02a.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="21"><img src="http://d.hiphotos.baidu.com/album/s%3D1000%3Bq%3D90/sign=fe457bae49540923ae69677ea268ea78/1c950a7b02087bf47925d264f2d3572c10dfcf76.jpg?v=tbs" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="22"><img src="https://ss.csdn.net/p?http://mmbiz.qpic.cn/mmbiz/67jMo8COBP1icMRxE4w8x7fOiag4jgmict5XmrLwzNNbomw4QDNshgFhN4Lu2heOHpiaKt8DKkumZrPABWGPoExrXg/0?wx_fmt=gif&amp;wxfrom=5&amp;wx_lazy=1" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="23"><img src="https://t1.picb.cc/uploads/2018/05/01/2WjsGM.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="24"><img src="https://s1.ax1x.com/2018/03/09/9RBOTs.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="25"><img src="https://i.loli.net/2018/05/16/5afc0c672038f.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="26"><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3401648591,1984182998&amp;fm=11&amp;gp=0.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="27"><img src="https://cdn.luogu.com.cn/upload/pic/28944.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="28"><img src="http://p2.so.qhimgs1.com/bdr/_240_/t01bd18cf83cd827302.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="29"><img src="http://p0.so.qhmsg.com/bdr/_240_/t010c0eb307026e1c25.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="30"><img src="http://p0.so.qhmsg.com/bdr/_240_/t01f0144db06d6f4445.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="31"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t013ecf5af9a2892de4.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="32"><img src="http://p4.so.qhmsg.com/bdr/_240_/t01b2122b65fbff77e9.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="33"><img src="http://p2.so.qhimgs1.com/bdr/_240_/t01f7e6141f2ca49712.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="34"><img src="http://p1.so.qhimgs1.com/bdr/_240_/t0140ef50e2fe0ca401.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="35"><img src="http://p2.so.qhimgs1.com/bdr/_240_/t01ee4404717ce76122.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="36"><img src="http://p1.so.qhimgs1.com/bdr/_240_/t014b3c3d765f78062d.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="37"><img src="http://p0.so.qhmsg.com/bdr/_240_/t017999172b9e67fe05.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="38"><img src="http://p0.so.qhmsg.com/bdr/_240_/t011e66b7950920ac6f.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="39"><img src="http://p0.so.qhmsg.com/bdr/_240_/t014ca78fca2ca2970f.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="40"><img src="http://p3.so.qhmsg.com/bdr/_240_/t0112c7cb02e25393b8.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="41"><img src="https://cdn.luogu.com.cn/upload/pic/25696.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="42"><img src="http://p4.so.qhmsg.com/bdr/_240_/t0169b4febfacf0e029.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="43"><img src="http://p0.so.qhmsg.com/bdr/_240_/t0169c0093ff8cfaff5.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="44"><img src="http://p4.so.qhmsg.com/bdr/_240_/t016a15367f827d9519.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="45"><img src="https://news-pic.qiushibaike.com/watermark/b1254cd3e9f5f945276479a040e879d0.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="46"><img src="https://news-pic.qiushibaike.com/watermark/30e9b539f44e592f22790eeb15283056.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="47"><img src="http://p3.so.qhimgs1.com/bdr/_240_/t0168bbf6480ebec0f3.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="48"><img src="http://p3.so.qhmsg.com/bdr/_240_/t0170fd99b57ec5c9e8.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="49"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t01cfe3c6b6c19fc80c.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="50"><img src="http://p0.so.qhmsg.com/bdr/_240_/t01bcdce0c5b84f2175.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="51"><img src="http://p1.so.qhimgs1.com/bdr/_240_/t017855ddf79af74d91.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="52"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t017987cf2a8de6f6d0.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="53"><img src="http://pic.fxxz.com/up/2017-6/2017062009463137633.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="54"><img src="http://p0.so.qhmsg.com/bdr/_240_/t01f874d18c30046785.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="55"><img src="http://d.hiphotos.baidu.com/image/pic/item/91ef76c6a7efce1b165b0a95a451f3deb48f6579.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="56"><img src="http://e.hiphotos.baidu.com/image/pic/item/0b55b319ebc4b745a7cc8c79c4fc1e178a821500.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="57"><img src="http://f.hiphotos.baidu.com/image/pic/item/d788d43f8794a4c200569b4405f41bd5ad6e3963.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="58"><img src="http://e.hiphotos.baidu.com/image/pic/item/e824b899a9014c08bae822ca017b02087af4f48a.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="59"><img src="http://p3.so.qhimgs1.com/bdr/_240_/t01de370bb77eb3b193.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="60"><img src="http://b.hiphotos.baidu.com/image/pic/item/aa18972bd40735faa79bedfb95510fb30f24080c.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="61"><img src="http://d.hiphotos.baidu.com/image/pic/item/8ad4b31c8701a18b54a1110f952f07082838fe2c.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="62"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t012224fc11ed3a24bc.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="63"><img src="http://p2.so.qhimgs1.com/bdr/_240_/t01282f5ab5f2ac4142.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="64"><img src="http://g.hiphotos.baidu.com/image/pic/item/aa64034f78f0f73661cb676e0155b319ebc413a3.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="65"><img src="http://p0.so.qhmsg.com/bdr/_240_/t0103694464cb31bbe5.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="66"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t01a6b6fe40f1630bca.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="67"><img src="http://p5.so.qhimgs1.com/bdr/_240_/t013da088562f5d9deb.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="68"><img src="http://www.5577.com/up/2017-7/14995602476116438.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="69"><img src="http://p0.so.qhimgs1.com/bdr/_240_/t01aeab0e5b57acc04c.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="70"><img src="http://p1.so.qhmsg.com/bdr/_240_/t0199b03637c1ffade6.gif" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="71"><img src="http://a.hiphotos.baidu.com/image/pic/item/810a19d8bc3eb135e36e51dbad1ea8d3fd1f4421.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="72"><img src="http://p5.so.qhimgs1.com/bdr/_240_/t01b290353704a854eb.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="73"><img src="http://p1.so.qhmsg.com/bdr/_240_/t0105fcbe9475e24f86.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="74"><img src="http://p4.so.qhmsg.com/bdr/_240_/t01967e6a7adbc07e59.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="75"><img src="http://h.hiphotos.baidu.com/image/pic/item/d009b3de9c82d158ab765af18b0a19d8bd3e42fd.jpg" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="76"><img src="http://d.hiphotos.baidu.com/image/pic/item/35a85edf8db1cb130218407cd654564e92584b6f.jpg" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[大佬的blog]]></title>
-        <id>https://orzbigbug.github.io/post/da-lao-de-blog/</id>
-        <link href="https://orzbigbug.github.io/post/da-lao-de-blog/">
-        </link>
-        <updated>2021-04-17T01:20:42.000Z</updated>
-        <content type="html"><![CDATA[<p>屏幕在深夜微微发亮</p>
-<p>思想在那虚树路径上彷徨</p>
-<p>平面的向量交错生长</p>
-<p>织成 忧伤的网</p>
-<p>剪枝剪去我们的疯狂</p>
-<p>SPFA告诉我前途在何方</p>
-<p>01背包装下了忧伤</p>
-<p>笑颜 洋溢脸庞</p>
-<p>键盘微凉 鼠标微凉</p>
-<p>指尖流淌 代码千行</p>
-<p>凸包周长 直径多长</p>
-<p>一进考场 全都忘光</p>
-<p>你在OJ上提交了千百遍</p>
-<p>却依然不能卡进那时限</p>
-<p>双手敲尽代码也敲尽岁月</p>
-<p>只有我一人 写的题解</p>
-<p>凋零在OJ里面</p>
-<p>Tarjan陪伴强连通分量</p>
-<p>生成树完成后思路才闪光</p>
-<p>欧拉跑过的七桥古塘</p>
-<p>让你 心驰神往</p>
-<p>队列进出图上的方向</p>
-<p>线段树区间修改求出总量</p>
-<p>可持久化留下的迹象</p>
-<p>我们 伏身欣赏</p>
-<p>数论算法 图论算法</p>
-<p>高斯费马 树上开花</p>
-<p>线性规划 动态规划</p>
-<p>时间爆炸 如何优化</p>
-<p>我在OI中辗转了千百天</p>
-<p>却不让我看AK最后一眼</p>
-<p>我用空间换回超限的时间</p>
-<p>随重新编译 测完样例</p>
-<p>才发现漏洞满篇</p>
-<p>原来CE 是因选错语言</p>
-<p>其实爆零 只因忘写文件</p>
-<p>如果标算太难请坚定信念</p>
-<p>不如回头再看一眼题面</p>
-<p>以那暴力模拟向正解吊唁</p>
-<p>蒟蒻的蜕变</p>
-<p>神犇出现</p>
-<p>终将与 Au 擦肩</p>
-<hr>
-<p>模拟只会猜题意</p>
-<p>贪心只能过样例</p>
-<p>数学上来先打表</p>
-<p>D P 一般看规律</p>
-<p>组合数学靠运气</p>
-<p>计算几何瞎暴力</p>
-<p>图论强行套模板</p>
-<p>数论只会G C D</p>
-<p>递归递推伤不起</p>
-<p>搜索茫然T L E</p>
-<p>分治做得像枚举</p>
-<p>暴力枚举数第一</p>
-<p>数据结构干瞪眼</p>
-<p>怒刷水题找信心</p>
-<p>涨姿势也不容易</p>
-<p>考试一来全懵逼</p>
-<hr>
-<p>陈独秀同志，请你坐下，你这种行为挡住了旁边的李大钊同志发言，这让胡适同志很难受，令鲁迅同志很难堪，朱自清同志表示很尴尬，钱钟书和徐志摩同志已经在撸袖子了，所以，为了你的生命财运亨通，请默默坐下，低调做人，你凳子上的钉子我已经给你拔掉了，凳子底下的地雷我也给你挖出来了，对面楼上的狙击手也被击毙了，下水道里的特务也被淹死了，现在能不能坐下来了？</p>
-<hr>
-<p>班长说:走，我们去炸xxx。</p>
-<p>副班长说:这个主意不错</p>
-<p>化学课代表负责提取氢气</p>
-<p>物理课代表负责拼装氢弹</p>
-<p>数学课代表负责计算爆破面积</p>
-<p>地理课代表负责策划爆破地点</p>
-<p>历史课代表负责记录光辉场面</p>
-<p>生物课代表负责事后生态环境</p>
-<p>政治课代表负责使用法律打官司</p>
-<p>语文课代表负责乱写文章推卸责任</p>
-<p>英语课代表到外国购买进口材料</p>
-<p>体育课代表负责屠杀XXX。</p>
-<hr>
-<p>AC=Answer Coarse=粗劣的答案</p>
-<p>WA=Wonderful Answer=好答案</p>
-<p>TLE=Time Limit Enough=时间充裕</p>
-<p>MLE=Memory Limit Enough=内存充裕</p>
-<p>CE=Compile Easily=轻松通过编译</p>
-<p>RE=Run Excellently=完美运行</p>
-<p>UKE=Unbelievably Keep Enough Score=难以置信地保持<br>
-足够的分数</p>
-<p>AU=All Unaccepted=全都不正确</p>
-<hr>
-<p>语文老师一回头，鲁迅甘为孺子牛；</p>
-<p>数学老师一回头，六元六次都能求；</p>
-<p>英语老师一回头，满口洋文跑地球；</p>
-<p>物理老师一回头，一根杠杆撬地球；</p>
-<p>化学老师一回头，二氧化碳变汽油；</p>
-<p>劳动老师一回头，破铜烂铁来走秀；</p>
-<p>体育老师一回头，黛玉也能踢足球；</p>
-<p>政治老师一回头，全班同学都梦游；</p>
-<p>地理老师一回头，找到黄金牛不牛;</p>
-<p>美术老师一回头，蒙娜丽莎也风流;</p>
-<p>音乐老师一回头，贝多芬他也不牛;</p>
-<p>信息老师一回头，带着学生玩网游！</p>
-<hr>
-<p>打表法就是将题目中需要的答案集合提前算出来，存到代码里，根据题目所需取答案，这种方法通常只需要将程序挂着，在表打完后进行加工，最终取答案程序时间复杂度为O(1)，空间复杂度为O(n)(n为答案规模)； ——沃兹·基朔德</p>
-<hr>
-<p>那年少年意气正浓</p>
-<p>一行AC 一次欢腾</p>
-<p>那年学长壮志满胸</p>
-<p>满座后生 听他谈笑间算法不再难懂</p>
-<p>树上路径 分清边孰轻孰重</p>
-<p>高次不定方程 线性同余方程</p>
-<p>任他变化无穷</p>
-<p>lazy标记有没有清空</p>
-<p>离散化时有没有去重</p>
-<p>你的眼神锐利如锋</p>
-<p>一眼挑漏洞</p>
-<p>而你深夜刷题至三更</p>
-<p>O（松）算法通过多从容</p>
-<p>而你笑道正解无用 暴力把分送</p>
-<p>AK都轻松</p>
-<p>记忆截断退役之后</p>
-<p>未有名次 OI难留</p>
-<p>如今已是 物是人非 身影作旧</p>
-<p>恍然又记起你讲题的时候</p>
-<p>动态规划 决策单调变更优</p>
-<p>上下界网络流 增广路费用流</p>
-<p>这一步 往哪走</p>
-<p>常数优化多小才算够</p>
-<p>反演几次答案才能求</p>
-<p>你的话语清晰易懂 将题解拼凑</p>
-<p>再不能与你旧约相守</p>
-<p>将那算法导论去看透</p>
-<p>难忘记你笑脸温柔</p>
-<p>命运如锁扣 路我代你走</p>
-<p>机房里 白板已擦净 将你字迹清除</p>
-<p>独自地 在机房里做着你留的题目</p>
-<p>或许有时 还会突然怀念你给的帮助</p>
-<p>你告诉我 绝不认输</p>
-<p>他们说的退役太沉重</p>
-<p>你在路上追着你的梦</p>
-<p>前路会与过往不同</p>
-<p>但精彩纷呈</p>
-<p>而我深夜刷题至三更</p>
-<p>大赛过后睡眼正惺忪</p>
-<p>恍然之间终于看懂 当年你笑容</p>
-<p>谈何轻松</p>
-<p>不如将你镌刻在心中</p>
-<p>以足迹为路 以背影为灯</p>
-<p>去年今日的歌声</p>
-<p>由我来传承</p>
-<p>省选亚太精英旧路上过</p>
-<p>春风拂袖暖阳正当空</p>
-<p>定有某日OI赛中</p>
-<p>荧幕之前</p>
-<p>台阶之上</p>
-<p>看奖牌芳容</p>
-<p>六月至七月 远方等候</p>
-<p>你为我光荣</p>
-<hr>
-<p>美国人：不要打架！银坷垃好处都有啥，谁说对了就给他！</p>
-<p>非洲人：肥料掺了银坷垃，都流失，都蒸发，全浪费。</p>
-<p>日本人：肥料掺了银坷垃，能吸收万米下的铅铝汞！</p>
-<p>非洲人：世界肥料都降价，肥料掺了银坷垃，十袋能顶一袋<br>
-撒！</p>
-<p>日本人：用了银坷垃，小麦毁掉一千八，日本的粮食再也不<br>
-向美国出口了！哈哈哈哈哈哈！！！</p>
-<p>美国人：</p>
-<p>/<em>小鬼子，真不傻！银坷垃给了他，对美国农业利益大，绝<br>
-不能给了他！</em>/</p>
-<p>非洲农业很发达，我们都要炸掉他。银坷垃，你们日本别想<br>
-了！</p>
-<p>日本人：狡猾！狡猾！没有银坷拉，怎么毁庄稼？银坷<br>
-垃！！！银坷垃！！！！！！</p>
-<hr>
-<p>刚刚有个傻冒告诉我鲁迅姓周，真逗啊！周迅是个演员好吗？笑死我了！真想一板砖呼死他！我记得鲁迅原名李大钊，浙江周树人，是著名的法西斯音乐家，一生有2000多项发明，被称为太空步的创始人。他拥有一个好嗓子，小学时就凭借着90分钟跑100米的优异成绩考上了新东方烹饪学校！毕业后成功进入富士康苦心练习勃鸡， 他擅长110米栏，左手反打技术高超，拿手全垒打，大灌篮，“后空翻180度右旋体360度后蹬地翻转720度”是他的经典动作，更难得可贵的是他落地没有水花。他还是恶魔果实能力者，传说中的三忍之一，曾大闹天宫，后改邪归正，统一三国，传说他有107个弟兄，个个铜头铁臂，面目狰狞，这便是羊村的起源，她生平淡泊名利，曾经锻造五色神石补天，因杀死西门庆等原因，上梁山当了土匪，后遇到高人阿凡达的指点，收买阿童木打死了白雪公主，与七个小矮人快乐的生活在一起！并写了名侦探柯南的故事。名侦探柯南讲述的是要成为海贼王的八神太一收服了皮卡丘并登上创界山启动光能使者打败了鲨鱼辣椒，然后跟多啦A梦一起通过黄金十二宫收集七个葫芦娃召唤神龙复活二代火影，但最终为了保卫M78星云而成为了羊村村长，同蓝精灵们一起抵抗光头强的入侵的故事。她还写了《时间简史》，后来因抽了龙王三太子的筋，以命偿命。后被太乙真人救活，又送了他不少法宝。然后又创建了‘洛谷’，‘洛谷’是一个收集变形金刚一起打小怪兽的网站。当时正值小黄人入侵时期，于是，她批量生产大白，成功抵御入侵，再一次拯救了人类！当她晚年时，热衷于炼丹，炼时经常失败，一大堆毒丹，当最后炼出长生不老之丹时，因老花眼吃错药而死。</p>
-<hr>
-<p>今日特价</p>
-<p>|香烤AC自动机 10滑稽币|</p>
-<p>|大吉草莓蛋糕 12滑稽币|</p>
-<p>|金黄烤main包 4滑稽币|</p>
-<p>|kkk酱三明治 6滑稽币|</p>
-<p>|spfa奶盖 4滑稽币|</p>
-<p>|TLE蓝莓酱伴炒仙人掌 8滑稽币|</p>
-<p>|氧气优化 1.5滑稽币/份|</p>
-<p>|极品烤main筋 1滑稽币/串|</p>
-<p>|AC青柠黄瓜汁 4滑稽币|</p>
-<p>|平衡树拌稀疏图 6滑稽币|</p>
-<p>|并查集烤DP 5滑稽币|</p>
-<p>|家养chen_zhe 5滑稽币/斤|</p>
-<p>|野生chen_zhe 10滑稽币/斤|</p>
-<p>|假chen_zhe 1滑稽币/10斤|</p>
-<hr>
-<p>哦，你可看见，透过一线绿色，我们对着什么，发出欢呼的声浪？</p>
-<p>谁的无数代码，冒着一夜键声，依然屹立不倒，在27寸屏幕上？</p>
-<p>代码闪闪发光，AC轰轰作响，它们都是见证，C++安然无恙。</p>
-<p>你看C++不是还高高飘扬，在这自由语言，神犇的家乡？</p>
-<p>透过稠密的WA，隐约望见对岸，P党正在CE，四周沉寂夜阑珊。</p>
-<p>微风断断续续，吹过IOI之巅，你说那是什么，风中半隐又半现？</p>
-<p>现在它的身上，映着朝霞烂漫，凌空照在水面，霎时AC一片。</p>
-<p>这是C++！但愿它长久飘扬，在这自由语言，神犇的家乡。</p>
-<p>都到哪里去了，信誓旦旦的OIer？他们向往的是能在竞赛中AK。</p>
-<p>NOI和ACM，不要抛弃他们，他们自己用代码，洗清肮脏的WA。</p>
-<p>这些Pascal党，没有STL保护，逃脱不了WA和CE的命运。</p>
-<p>但是C++却将要继续飘扬，在这自由语言，神犇的家乡。</p>
-<p>玉碎还是瓦全，摆在我们面前，C党将奋起保卫C++长招展！</p>
-<p>C++自有天相，胜利AK在望；建AC，保AK，感谢CCF的力量。</p>
-<p>我们一定得胜，正义属于C++，“我们信赖CCF。”此语永世不忘。</p>
-<p>你看C++将万古长存，在这自由语言，神犇的家乡！</p>
-<hr>
-<p>《作业的怀念》 看到国庆作业后，我的脾气变得暴怒无常。望着望着天上北归的雁阵，我会突然把面前的卷子撕碎；听着听着李谷一甜美的歌声，我会猛地把手里的作业本摔向四周的墙壁。母亲就悄悄地躲出去，在我看不见的地方偷偷地听着我的动静。当一切恢复沉寂，她又悄悄地进来，眼边红红的，看着我。“听说书城的参考答案都开卖了，我推着你去买点。”她总是这么说。母亲喜欢答案，可自从十一作业下发后，她箱子里的参考答案都不见了。“不，我不去！”我狠命地捶打这加起来可以绕地球99圈的作业，喊着：“我写个什么劲！”母亲扑过来抓住我的手，忍住哭声说：“咱娘儿俩在一块儿，好好儿抄，好好儿抄……” 可我却一直都不知道，她的老年学院作业多的已经到了那步田地。后来妹妹告诉我，她常常半夜抄答案手疼得整宿整宿翻来覆去地睡不了觉。 那天我又独自坐在作业堆里，看着窗外邻居的卷子“唰唰啦啦”地飘落。母亲进来了，挡在窗前：“参考答案专卖店开了，我推着你去看看吧。”她憔悴的脸上现出央求般的神色。“什么时候？”“你要是愿意，就明天?”她说。我的回答已经让她喜出望外了。“好吧，就明天。”我说。她高兴得一会坐下，一会站起：“那就赶紧准备准备。”“唉呀，烦不烦？几步路 她高兴得一会坐下，一会站起：“那就赶紧准备准备。”“唉呀，烦不烦？几步路，有什么好准备的！”她也笑了，坐在我身边，絮絮叨叨地说着：“买完答案，咱们就去‘雇人一起抄’，你小时候最喜欢一连雇5人一起抄。还记得那回我带你去书城吗？你偏说那答案是市北的，只好自己做作业……”她忽然不说了。对于“自己做”和“作业”一类的字眼儿。她比我还敏感。她又悄悄地出去了。 她出去了。就再也没回来。 邻居们把她抬上车时，她还在大口大口地吐着鲜血。我没想到她已经病成那样。看着三轮车远去，也绝没有想到那竟是永远的诀别。 邻居的小伙子背着我去看她的时候，她正艰难地呼吸着，像她那一生艰难的生活。别人告诉我，她昏迷前的最后一句话是：“我儿子那些还没写完的十一作业•••” 又是秋天，妹妹推我去书城买了答案。数学的痛快、语文的完美、英语的简单，泼泼洒洒，秋风中正抄得爽快。我懂得母亲没有说完的话。妹妹也懂。我俩在一块儿，要好好儿抄作业</p>
-<hr>
-<p>大清早的,孩子们背上了SB（书包）; 大人们忙着去SB（上班）; 我呢，就来上网看看又有什么新消息在SB（散播）; 晚上,点菜的时候我说SB（随便）; 吃饱了到大街上SB（散步）; 回来手里就抓着SB（鼠标）; 有心情还去博客里写写SB（随笔）; 人，整天都在SB ! 有幸碰到两美国美妞聊天， 以为自己英文过关， 但只听清一句话就是SB（somebody = sb.）; 人活着可真SB（失败）啊........ 那年我SB（十八）， 到部队当SB（士兵）。 一开始，我当的是SB（哨兵）。 苦差事啊，看见SB（上边）就要敬礼， 一站几个钟头还不让看SB（手表）， 屁大的事情都要及时SB（上报）， 练站姿的时候还要挂个小SB（沙包）， 一天下来，连SB（散步）的力气也没有了。 我就SB（随便）编了个理由说我SB（生病）想转去当SB（水兵）， 结果被分到一个SB（舢板）上，靠，就我那个SB（身板）， 把我晕得呀，连上个月会餐吃的SB（扇贝）、SB（烧饼）都吐出来了，额滴神呀， 我SB（上辈）子做了什么孽啊。 领导打算把我改去当SB（伞兵）， 我说我不去， 这要是着陆不小心， SB（势必）就变成SB（伤兵）了， 要是SB（手背）或者SB（上臂）受伤裹上SB（纱布）， 最多留个SB（伤疤）， 要是腿摔断，可就变成SB（孙膑）了， 如果遇到SB（山包）SB（闪避）不及， 那可真的SB（折本）了。 于是，我干脆SB（收兵）不干了。 当兵前后SB（三百）天， 除了累得脸SB（刷白）， 什么也没有学到。 去SB（上班）吧？ 我念书的时候也不认真， 从来不带SB（书包）、 不看SB（书本）， 现在连SB（鼠标）都不会用。 只好去给人家看SB（水泵）， 我连SB（烧杯）都没有摸过， 我哪懂？那个SB（设备）， 没有说明、 没有SB（商标）也没有其它SB（识别）标记， 噪音的SB（声波）在屋子里SB（散播）， 像SB（山崩）一样。 突然，一个SB（事变）发生了， 我SB（身边）的一块SB（石板）突然倒下了。 我就这样去了， 一辈子也没有过什么大SB（手笔）， 连SB（手边）的事情都没有做好， 身材也不行， 都上不了SB（三版）。 哎，当我在天上唱着吉祥SB（三宝）的时候， 我看见后人在我的墓碑上刻下——SB（失败）。</p>
-<hr>
-<p>盼望着，盼望着，模拟赛来了，CSP的脚步近了。</p>
-<p>一切都像刚WA的样子，欣欣然重构代码。代码复杂度朗润起来了，时间复杂度涨起来了，CE的标志红起来了。</p>
-<p>毒瘤数据偷偷地从土里钻出来，嫩嫩的，绿绿的。洛谷里，CODE FORCE里，瞧去，一大片一大片满是的。坐着，躺着，写两个for，码几脚while，跑几趟dfs，搜几回暴力。TLE轻悄悄的，MLE软绵绵的。</p>
-<p>POJ、HDU、51nod，你不让我，我不让你，都开满了WA赶趟儿。红的像火，粉的像霞，白的像雪。WA里带着RE；闭了眼，评测界面仿佛已经满是UKE、ERR、OLE。花下成千成百的蜜蜂嗡嗡地闹着，大小的蝴蝶飞来飞去。0分遍地是：杂样儿，DP没初始化的，数学公式写错的，散在评测机里，像眼睛，像星星，还眨呀眨的。</p>
-<p>“吹面不寒AK风”，不错的，像CCF主席的手抚摸着你。风里带来些新翻的AC的气息，混着打表味儿，还有各种骗分的香，都在微微润湿的AK里酝酿。模拟将巢安在长篇文章当中，高兴起来了，呼朋引伴地卖弄超过200行的代码，唱出宛转的AC音乐，与轻风流水应和着。IOI通过的短笛，这时候也成天嘹亮地响着。</p>
-<p>Debug是最寻常的，一调就是三两天。可别恼。看，像无限循环，像scanf不写&amp;，像数组越界，密密地斜织着，人家exe上全笼着一层01串。大佬的评测却AC得发亮，蒟蒻的评测也WA得逼你的眼。傍晚时候，上灯了，一点点算法错误的光，烘托出一片贪心错误的夜。在乡下，小路上，石桥边，有撑起伞慢慢走了1e18秒的人。还有地里工作的码农，披着电源戴着黑帽子的。他们的电脑，稀稀疏疏的在调试里静默着。</p>
-<p>天上AKNOI渐渐多了，地上AKIOI也多了。俄国中国，克罗地亚，波罗的海，也赶趟儿似的，一个个都出来了。AKAK CSPJ，AKAK CSPS，各AK各的一份事去。“一年之计在于CSP”，刚起头儿，有的是RE，有的是爆零。</p>
-<hr>
-<p>唧唧复唧唧，木兰开飞机。<br>
-开的什么机？波音七四七。<br>
-问女何所思，问女何所忆。<br>
-女亦无所思，女亦无所忆。<br>
-昨夜见军帖，可汗造飞机，<br>
-飞机十二架，架架买不起。<br>
-阿爷无大钱，木兰无金银，<br>
-愿为市鞍马，从此造飞机。<br>
-东市买图纸，西市买铁皮，<br>
-南市买螺丝，北市买引擎。<br>
-旦辞爷娘去，暮宿造机场，<br>
-不闻爷娘唤女声，但闻铁锤砸铁哐哐哐。<br>
-旦辞黄河去，暮至飞机坪，<br>
-不闻爷娘唤女声，但闻飞机起飞轰隆隆。<br>
-万里开飞机，关山度若飞。<br>
-朔气传机翼，寒光照铁皮。<br>
-将军被炸死，壮士没能归。<br>
-归来撞天子，天子坐病房。<br>
-策勋十二转，赏赐百千强。<br>
-可汗问所欲，木兰不愿进牢房，<br>
-愿驰千里足，送儿还故乡。<br>
-爷娘闻女来，端起机关枪；<br>
-阿姊闻妹来，当户理红妆；<br>
-小弟闻姊来，磨刀霍霍向爹娘。<br>
-踢我东阁门，踹我西阁床，<br>
-撕我战时袍，毁我旧时裳。<br>
-当窗砸云鬓，对镜扔花黄。<br>
-出门看火伴，火伴皆惊忙：<br>
-同行十二年，不知木兰是女郎。<br>
-傻子脚扑朔，呆子眼迷离；<br>
-俩人并排走，谁能说我不正常！</p>
-<hr>
-<p>AKIOI后，赵权的脾气变得暴怒无常。望着望着街上路过的蒟蒻，赵权会突然把蒟蒻的键盘砸碎；看着看着洛谷黑题难懂的题目，赵权会猛地把正解摔向洛谷的编译器。郁庭就悄悄地躲出去，在赵权看不见的地方偷偷地听着赵权的动静。当一切恢复沉寂，他又悄悄地进来，眼边红红的，看着赵权。“听说CSP的初赛开始了，你要去AK吗”他总是这么说。郁庭喜欢紫题，可自从赵权AKIOI以后，他AC的那些紫题都被赵权AC了。“不，我不去！”赵权狠命地AC这两道可怜的紫题，喊着，“我AC紫题可有什么劲儿！”郁庭扑过来五体投地，忍住膜拜说：“我和赵权在一块儿，好好儿膜拜，好好儿膜拜……”</p>
-<p>可郁庭却一直都不知道，他已经巨到了那步田地。后来符水波告诉郁庭，他常常使王潞娟肾疼得整宿整宿翻来覆去地睡不了觉。</p>
-<p>那天赵权又独自坐在屋里，看着洛谷的黑题“唰唰啦啦”地被AC。郁庭进来了，挡在电脑前：“CSP的复赛开始了，你去AK吧。”他憔悴的脸上现出央求般的神色。“用多久？”“你要是愿意，就1秒?”郁庭说。赵权的回答已经让他喜出望外了。“好吧，就1秒。”赵权说。他高兴得一会五体投地，一会顶礼膜拜：“那就赶紧准备准备。”“哎呀，烦不烦？1秒钟，有什么好准备的！”郁庭也笑了，坐在赵权身边，絮絮叨叨地说着：“AK完CSP，咱们就去‘虐Bjarne Stroustrup’，你小时候最爱虐他的黑题。还记得那回你去虐Bjarne Stroustrup吗？你偏说那黑题是入门难度，AK着，一秒AC一个……”他忽然不说了。对于“入门难度”和“红题”一类的字眼，他比赵权还敏感。他又悄悄地膜拜赵权了。</p>
-<p>他膜拜了，就再也没停下来。</p>
-<p>赵权AKIOI时，他还在大幅度地膜拜着。他没想到赵权已经巨成那样。看着赵权AKIOI，也绝没有想到那竟是全宇宙最巨的巨佬。</p>
-<p>蛟川的王潞娟膜拜着赵权的时候，郁庭正虔诚地膜拜着，像膜拜神仙。别人告诉王潞娟，他AK前的最后一句话是：“IAKIOI……”</p>
-<p>又是赵权AKIOI，郁庭和符水波去膜拜了赵权。蓝色的题AK，灰色的题AK，紫黑色的题AK，全是一遍AC，评测记录中绿得烂漫。郁庭懂得赵权没有说完的话。符水波也懂。赵权太巨了，要好好膜拜……</p>
-<hr>
-<p>综合楼的上面有几个很小的房，相传叫作机房。现在是早已并楼一起交给王阳明的子孙了，连那最末次的相见也才隔了一两天，其中似乎确凿只有一些电脑；但那时却是郑熠的乐园。</p>
-<p>不必说矫健的郁庭，严肃的符水波，睿智的汪直方，遍地的蒟蒻；也不必说巨佬在电脑间装弱，肥胖的罗大伏在桌子上，强大的郑熠（巨佬）忽然把最优解直扔向评测器里去了。单是周围的小小的讨论区一带，就有无限趣味。蒟蒻在这里低唱，巨佬们在这里虐菜。点开灌水区来，有时会遇见chen_zhe；还有kkksc03，倘若用“郑熠”发在它的帖子，便会忽地一闪，从电脑前闪出一个“膜拜”。红题和黑题交互着，红题有繁星一般的题解，黑题有极少的通过人数。有人说，黑题是有能做的，AC了便可以成仙，郑熠于是常常AC起来，牵连不断地AC起来，也曾因此弄坏了评测器，却从来没有见过有一道题不能AC。如果不怕膜，还可以AC灰题，象上古流传的难题，又难懂又难做，各方面都比紫题要难得远。</p>
-<p>学术版里是不去的，因为相传这版里有一只很巨的管理员。</p>
-<p>符水波曾经讲给我一个故事听：先前，有一个程序员住在机房里用功，晚间，在机房里虐题的时候，突然听到有人在叫他。答应着，四面看时，却见一个肥胖的脸露在墙头上，向他一笑，隐去了。他很高兴；但竟给那走来监督的郁庭识破了机关。说他脸上有些巨气，一定遇见“罗大”了；这是人首蛇身的神仙，能唤人名，倘一答应，夜间便要来教这人算法的。他自然吓得要死，而那郁庭却道无妨，给他一个小盒子，说只要放在枕边，便可高枕而卧。他虽然照样办，却总是睡不着，——当然睡不着的。到半夜，果然来了，沙沙沙！门外象是风雨声。他正抖作一团时，却听得豁的一声，一道金光从枕边飞出，外面便什么声音也没有了，那金光也就飞回来，敛在盒子里。后来呢？后来，郁庭说，这是郑熠的账号，它能吸神仙的脑髓，罗大就被它治死了。</p>
-<p>结末的教训是：所以倘有陌生的声音叫你的名字，你万不可答应他。</p>
-<p>这故事很使我觉得做人之险，夏夜刷题，往往有些担心，不敢去看墙上，而且极想得到一个郑熠那样的神仙账号。走到机房的电脑旁边时，也常常这样想。但直到现在，总还没有得到，但也没有遇见过管理员和罗大。叫我名字的陌生声音自然是常有的，然而都不是罗大。</p>
-<p>秋天的机房比较的无味；比赛一来，可就两样了。装弱（将自己的分数故意降低）和虐菜需要人们鉴赏，这是荒房，人迹罕至，所以不相宜，郑熠只好来AK。两秒的时间，是不行的；总须蒟蒻埋头苦干一两天，菜鸟们久已筋疲力尽的时候才好。打开一台电脑，露出桌面，用一个鼠标点进一个cpp来，上面写些代码，编译键都不用按，轻轻地按着Ctrl a，看全选复制完，粘贴到洛谷的时候，将提交键一点，便AC了。但所AC的是黑题居多，也有玄学的“dp题”，题意很难，蒟蒻看不懂的。</p>
-<p>这是看见郑熠刷题的蒟蒻所传授的方法，我却不大能用。明明见代码粘贴了，提了交，点进一看，却什么都没有AC，费了半天力，AC的不过三四个点。郑熠是小半分钟便能AC几十道，放在提交记录里绿着的。我曾经问他得失的缘由，他只静静地笑道：你太弱，不可能把它理解透彻去。</p>
-<p>我不知道为什么家里的人要将我送进班级里去了，而且还是全年级中称为最严厉的班级。也许是因为在灌水区水了评论罢，也许是因为将%%写进题解的评论去了罢，也许是因为坐在别人的电脑前机惨了罢，……都无从知道。总而言之：我将不能常到机房了。Ade，我的电脑们！Ade，我的红题们和橙题们！</p>
-<p>出门向东，不上半里，走过一道石桥，便是我的先生的家了。从一扇黑油的竹门进去，第三间是机房。中间挂着一块扁道：膜拜巨佬；扁下面是一幅画，画着一只很肥大的梅花鹿伏在古树下。没有郑熠牌位，我们便对着那扁和鹿行礼。第一次算是拜郑熠，第二次算是拜先生。</p>
-<p>第二次行礼时，先生便和蔼地在一旁答礼。他是一个高而瘦的老人，须发都花白了，还戴着大眼镜。我对他很恭敬，因为我早听到，他是年级中极方正，质朴，博学的人。</p>
-<p>不知从那里听来的，虞大也很渊博，他认识一种神仙，名曰“郑熠”，巨气所化，用%一膜拜，就更巨了。我很想详细地知道这故事，但郁庭是不知道的，因为他毕竟不渊博。现在得到机会了，可以问先生。</p>
-<p>“先生，‘郑熠’这神仙，是怎么一回事？……”我上了生书，将要退下来的时候，赶忙问。</p>
-<p>“不知道！”他似乎很不高兴，脸上还有怒色了。</p>
-<p>我才知道做学生是不应该问这些事的，只要读书，因为他是渊博的OIER，决不至于不知道，所谓不知道者，乃是不愿意说。年纪比我大的人，往往如此，我遇见过好几回了。</p>
-<p>我就只膜拜，正午刷题，晚上讲课。先生最初这几天对我很严厉，后来却好起来了，不过给我刷的题渐渐加多，讲课也渐渐地加上难度去，从红题到橙题，终于到黄题。</p>
-<p>班级前面也有一台电脑，虽然小，但在那里也可以登上洛谷去发射犇犇，在模拟题或暴力题上思考。最好的工作是点开视频偷看，静悄悄地没有声音。然而同窗们到电脑前的太多，太久，可就不行了，先生在机房里便大叫起来：——</p>
-<p>“人都到那里去了？”</p>
-<p>人们便一个一个陆续走回去；一同回去，也不行的。他有一条戒尺，但是不常用，也有罚跪的规矩，但也不常用，普通总不过瞪几眼，大声道：——</p>
-<p>“膜拜！”</p>
-<p>于是大家放开喉咙膜拜一阵郑熠，真是人声鼎沸。有念“弱远乎哉我欲巨斯弱至矣”的，有念“膜郑熠巨佬曰五体投地”的，有念“上拜郑熠神仙”的，有念“郑熠秒秒钟AK了IOI和CTSC”的……先生自己也膜拜。后来，我们的声音便低下去，静下去了，只有他还大声膜拜着：——</p>
-<p>“巨郑熠，AK倜傥，一座皆惊呢～～；大神仙，AK黑题噫，一秒未用嗬～～……”</p>
-<p>我疑心这是极好的文章，因为膜到这里，他总是微笑起来，而且将头仰起，摇着，向后面拗过去，拗过去。</p>
-<p>先生膜拜入神的时候，于我们是很相宜的。有几个便用纸糊的键盘套在电脑上敲代码。我是画画儿，用一种叫作“荆川纸”的，蒙在郑熠的绣像上一个个描下来，象习字时候的影写一样。读的书多起来，画的画也多起来；书没有读成，画的成绩却不少了，最成片断的是《郑熠传》和《郑熠AK记》的绣像，都有一大本。后来，因为要钱用，卖给一个有钱的蒟蒻了。他的父亲是开锡箔店的；听说现在自己已经做了店主，而且快要升到蓝名的地位了。这东西早已流传千古了罢。 九月十八日</p>
-<hr>
-<p>---下面我给大家推荐几部电影---}<br>
-【这个手刹不太灵】}<br>
-【泰尼号坦克】}<br>
-【哈利波特与凤凰传奇】}<br>
-【妇产科联盟】}<br>
-【变形钢筋4】}<br>
-【家乐福海盗】}<br>
-【魂断蓝翔】}<br>
-【忠犬洪七公】}<br>
-【梁山伯与朱丽叶】}<br>
-【大侦探福尔马斯】}<br>
-【拯救大兵张嘎】}<br>
-【唐伯虎点蚊香】}<br>
-【决战杀马特】}<br>
-【钢筋侠】}<br>
-【午夜闹铃】}</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[弱智的猜数字游戏]]></title>
-        <id>https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/</id>
-        <link href="https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/">
-        </link>
-        <updated>2021-04-17T00:53:39.000Z</updated>
-        <content type="html"><![CDATA[<p>不务正业中...</p>
-<p>正常的猜数字游戏，会告知过大或过小。有一定概率电脑会说谎，说谎次数一定。</p>
-<p>本游戏开源，不更新版本。更改源代码来获得更好的体验！</p>
-<pre><code class="language-cpp">#include&lt;windows.h&gt;
-#include&lt;iostream&gt;
-#include&lt;ctime&gt;
-using namespace std;
-const int N=50;//数字将在1-N之间生成
-const int M=6; //你可以猜数字的次数
-const int C=1; //电脑说谎的次数
-const int A=1;
-const int B=5; //单次说谎的概率为A/B 
-int x,a,i,c;
-bool f;
-int main(){
-	SetConsoleTitle(&quot;——由BIGBUG乱搞而成!&quot;);
-	srand(time(NULL));
-	x=rand()%N+1;c=C;
-	for(i=M;i&gt;=1;--i){
-		system(&quot;cls&quot;);
-		cout&lt;&lt;&quot;你还有&quot;&lt;&lt;i&lt;&lt;&quot;次机会!\n&quot;; 
-		cout&lt;&lt;&quot;猜数字(1-&quot;&lt;&lt;N&lt;&lt;&quot;)：&quot;;
-		cin&gt;&gt;a;
-		if(a!=x) f=a&gt;x;
-		else{cout&lt;&lt;&quot;正确!&quot;;break;}
-		if(c&gt;0&amp;&amp;rand()%B&lt;A) f=!f;
-		printf(&quot;错误!%d过%s了!&quot;,a,f?&quot;大&quot;:&quot;小&quot;);
-		Sleep(2000);
-	}
-	system(&quot;cls&quot;);
-	if(i==0) cout&lt;&lt;&quot;正解是&quot;&lt;&lt;x&lt;&lt;&quot;!&quot;;
-	else cout&lt;&lt;&quot;你成功使用&quot;&lt;&lt;M-i+1&lt;&lt;&quot;次机会猜出了答案!&quot;;
-	return 0;
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
