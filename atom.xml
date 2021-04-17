@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://orzbigbug.github.io</id>
     <title>BIGBUG&apos;s blog</title>
-    <updated>2021-04-17T02:06:25.830Z</updated>
+    <updated>2021-04-17T02:15:18.891Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://orzbigbug.github.io"/>
     <link rel="self" href="https://orzbigbug.github.io/atom.xml"/>
@@ -278,7 +278,7 @@ int main(){
 <a href="https://orzbigbug.github.io/tag/gaoxiao/">搞笑部分</a><br>
 <a href="https://orzbigbug.github.io/tag/tijie/">题解部分</a></p>
 <hr>
-<h2 id="欢迎来到本蒟蒻的博客">欢迎来到本蒟蒻的博客</h2>
+<h2 id="欢迎来到本蒟蒻的博客">欢迎来到<a href="https://www.luogu.com.cn/user/110842">本蒟蒻</a>的博客</h2>
 <h3 id="蒟蒻的三国杀"><a href="https://orzbigbug.github.io/post/san-guo-sha/">蒟蒻的三国杀</a></h3>
 <p>推荐一个游戏：<a href="https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/">zrhzz</a></p>
 <p>斗图砖用：<a href="https://orzbigbug.github.io/post/dou-tu-wu-qi-ku/">dtwqk</a></p>
