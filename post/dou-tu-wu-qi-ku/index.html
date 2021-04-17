@@ -188,6 +188,26 @@
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '3b4747871a49bf7010c2',
+    clientSecret: '70c8d4cfe83c89a7188021c0f66111be66b9601c',
+    repo: 'orzbigbug.github.io',
+    owner: 'orzbigbug',
+    admin: ['orzbigbug'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
