@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://orzbigbug.github.io</id>
     <title>BIGBUG&apos;s blog</title>
-    <updated>2021-04-17T01:41:54.637Z</updated>
+    <updated>2021-04-17T01:47:44.642Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://orzbigbug.github.io"/>
     <link rel="self" href="https://orzbigbug.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://orzbigbug.github.io/images/avatar.png</logo>
     <icon>https://orzbigbug.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, BIGBUG&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[博客索引]]></title>
+        <id>https://orzbigbug.github.io/post/bo-ke-suo-yin/</id>
+        <link href="https://orzbigbug.github.io/post/bo-ke-suo-yin/">
+        </link>
+        <updated>2021-04-17T01:46:08.000Z</updated>
+        <content type="html"><![CDATA[<p>快速到达:</p>
+<p><a href="https://orzbigbug.github.io/tag/youxi/">游戏部分</a><br>
+<a href="https://orzbigbug.github.io/tag/gaoxiao/">搞笑部分</a><br>
+<a href="https://orzbigbug.github.io/tag/tijie/">题解部分</a></p>
+<hr>
+<h2 id="欢迎来到本蒟蒻的博客">欢迎来到本蒟蒻的博客</h2>
+<h3 id="蒟蒻的三国杀"><a href="https://orzbigbug.github.io/post/san-guo-sha/">蒟蒻的三国杀</a></h3>
+<p>推荐一个游戏：<a href="https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/">zrhzz</a></p>
+<p>斗图砖用：<a href="https://orzbigbug.github.io/post/dou-tu-wu-qi-ku/">dtwqk</a></p>
+<h3 id="推荐一个巨佬yrp">推荐一个巨佬：<a href="https://www.luogu.com.cn/user/23426">yrp</a></h3>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LG1495 【曹冲养猪】]]></title>
         <id>https://orzbigbug.github.io/post/lg1495-cao-chong-yang-zhu/</id>
@@ -721,52 +739,6 @@ int main(){
 	return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[朱日和之战]]></title>
-        <id>https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/</id>
-        <link href="https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/">
-        </link>
-        <updated>2021-04-17T00:52:55.000Z</updated>
-        <content type="html"><![CDATA[<p>朱日和之战 v1.8.4</p>
-<p>一个多人对战小游戏，增加了不少新颖的元素。有刺激的对战元素，也有有趣的结盟玩法，局势瞬息万变，活到最后的才是赢家。保留BIGBUG游戏的传统风格，由蒟蒻编写。</p>
-<p>更新の日志：</p>
-<pre><code>10.13 增加身份系统
-10.07 增加10级满级 技能改变为资源上限
-10.06 击杀者可获得死亡者的资源
-10.06 技能增加伤害加成
-12.20 战斗、血量等细节调整
-12.20 增加团战模式
-12.21 给资源出错 调整
-12.29 新技能（自己探索）
-12.31 更改机制，优化界面
-12.31 又是新技能
-01.30 技能系统 3个技能
-01.31 更改了1个技能内容
-04.26 双人联机版出现
-04.30 更改了联机版的一个BUG
-06.06 修改了一些小BUG
-06.26 增加了一些信息和标题
-08.25 更改毁伤效果为回血数量减少
-08.25 加强所有技能，具体见官方攻略
-02.21 暂时隐藏联机版
-02.21 英文版
-</code></pre>
-<hr>
-<h1 id="朱日和之战出攻略啦">朱日和之战出攻略啦！</h1>
-<p>-&gt;<a href="https://bigbug-233.blog.luogu.org/shu-ri-hu-zhi-zhan-di-gong-lve">我要攻略！快给我</a>&lt;-</p>
-<h3 id="标准版">标准版</h3>
-<p>腾讯微云：<a href="https://share.weiyun.com/7YntS8fp">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/1Anjs_cm7Q15ghUyeNpLHuw">点击这里</a> 提取码: 63gv</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/iUAxwnd6p0h">点击这里</a><br>
-密码:4sv0</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<hr>
-<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
-<p><a href="https://wj.qq.com/s2/5238404/5987/">一份问卷调查</a></p>
-<p><a href="https://share.weiyun.com/5IJ7wOo-g">可以加入共享组</a></p>
-<p>//联机版好像只能在内网里面连接</p>
 ]]></content>
     </entry>
 </feed>
