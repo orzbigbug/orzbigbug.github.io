@@ -2,25 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>爆炸棋 | Gridea</title>
+<title>弱智的猜数字游戏 | Gridea</title>
 <link rel="shortcut icon" href="https://orzbigbug.github.io/favicon.ico?v=1618621114498">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://orzbigbug.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="爆炸棋 | Gridea - Atom Feed" href="https://orzbigbug.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="弱智的猜数字游戏 | Gridea - Atom Feed" href="https://orzbigbug.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="爆炸棋 v1.1.1
-应dove1242的要求，把这个游戏代码实现了。。。
-更新の日志：
-7.24 爆炸棋第一版发布
-7.25 增加提示语
-7.25 改掉了无限爆炸的问题
-8.02 修改参数错误，加快50后爆炸节奏 
-
-腾讯微云：点击这里
-..." />
+    <meta name="description" content="不务正业中...
+正常的猜数字游戏，会告知过大或过小。有一定概率电脑会说谎，说谎次数一定。
+本游戏开源，不更新版本。更改源代码来获得更好的体验！
+#include&lt;windows.h&gt;
+#include&lt;iostream&..." />
     <meta name="keywords" content="游戏" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -71,7 +66,7 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              爆炸棋
+              弱智的猜数字游戏
             </h2>
             <div class="post-info">
               <span>
@@ -89,37 +84,45 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>爆炸棋 v1.1.1</p>
-<p>应<a href="https://www.luogu.com.cn/user/174557">dove1242</a>的要求，把这个游戏代码实现了。。。</p>
-<p>更新の日志：</p>
-<pre><code>7.24 爆炸棋第一版发布
-7.25 增加提示语
-7.25 改掉了无限爆炸的问题
-8.02 修改参数错误，加快50后爆炸节奏 
+                <p>不务正业中...</p>
+<p>正常的猜数字游戏，会告知过大或过小。有一定概率电脑会说谎，说谎次数一定。</p>
+<p>本游戏开源，不更新版本。更改源代码来获得更好的体验！</p>
+<pre><code class="language-cpp">#include&lt;windows.h&gt;
+#include&lt;iostream&gt;
+#include&lt;ctime&gt;
+using namespace std;
+const int N=50;//数字将在1-N之间生成
+const int M=6; //你可以猜数字的次数
+const int C=1; //电脑说谎的次数
+const int A=1;
+const int B=5; //单次说谎的概率为A/B 
+int x,a,i,c;
+bool f;
+int main(){
+	SetConsoleTitle(&quot;——由BIGBUG乱搞而成!&quot;);
+	srand(time(NULL));
+	x=rand()%N+1;c=C;
+	for(i=M;i&gt;=1;--i){
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;你还有&quot;&lt;&lt;i&lt;&lt;&quot;次机会!\n&quot;; 
+		cout&lt;&lt;&quot;猜数字(1-&quot;&lt;&lt;N&lt;&lt;&quot;)：&quot;;
+		cin&gt;&gt;a;
+		if(a!=x) f=a&gt;x;
+		else{cout&lt;&lt;&quot;正确!&quot;;break;}
+		if(c&gt;0&amp;&amp;rand()%B&lt;A) f=!f;
+		printf(&quot;错误!%d过%s了!&quot;,a,f?&quot;大&quot;:&quot;小&quot;);
+		Sleep(2000);
+	}
+	system(&quot;cls&quot;);
+	if(i==0) cout&lt;&lt;&quot;正解是&quot;&lt;&lt;x&lt;&lt;&quot;!&quot;;
+	else cout&lt;&lt;&quot;你成功使用&quot;&lt;&lt;M-i+1&lt;&lt;&quot;次机会猜出了答案!&quot;;
+	return 0;
+}
 </code></pre>
-<p>腾讯微云：<a href="https://share.weiyun.com/yrKbCKSj">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/13BYohueTF8QrwMEoOVJBpw">点击这里</a> 提取码: 1ijx</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/iQa1Gnd6oxe">点击这里</a><br>
-密码:i02o</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<p>规则~~（复制警告）~~：</p>
-<p>获胜方法：场上其他人都没有棋子时获胜。<br>
-游戏规则：在棋盘上布置一个棋子，每个棋子都有不一样的引爆数量，俗称“金角银边铜肚皮”，其意思是角落的价值最高，只需要两个棋子就能引爆。引爆后棋子会朝四周四散方块，其他颜色的棋子被我方棋子爆开的碎片打中后会变成没有颜色的空位，如果碎片刚好落到了其他颜色的只剩一个就会引爆的棋子上，则会继续触发引爆，不过颜色变成了你的颜色。控制得到可以引起连环爆炸，反败为胜。</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E4%B8%8B%E8%BD%BD">洛谷下载</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -128,9 +131,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://orzbigbug.github.io/post/san-guo-sha/">
+            <a href="https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/">
               <h3 class="post-title">
-                三国杀
+                朱日和之战
               </h3>
             </a>
           </div>

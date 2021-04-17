@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://orzbigbug.github.io</id>
     <title>Gridea</title>
-    <updated>2021-04-17T00:53:18.499Z</updated>
+    <updated>2021-04-17T00:58:39.760Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://orzbigbug.github.io"/>
     <link rel="self" href="https://orzbigbug.github.io/atom.xml"/>
@@ -10,6 +10,49 @@
     <logo>https://orzbigbug.github.io/images/avatar.png</logo>
     <icon>https://orzbigbug.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[弱智的猜数字游戏]]></title>
+        <id>https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/</id>
+        <link href="https://orzbigbug.github.io/post/ruo-zhi-de-cai-shu-zi-you-xi/">
+        </link>
+        <updated>2021-04-17T00:53:39.000Z</updated>
+        <content type="html"><![CDATA[<p>不务正业中...</p>
+<p>正常的猜数字游戏，会告知过大或过小。有一定概率电脑会说谎，说谎次数一定。</p>
+<p>本游戏开源，不更新版本。更改源代码来获得更好的体验！</p>
+<pre><code class="language-cpp">#include&lt;windows.h&gt;
+#include&lt;iostream&gt;
+#include&lt;ctime&gt;
+using namespace std;
+const int N=50;//数字将在1-N之间生成
+const int M=6; //你可以猜数字的次数
+const int C=1; //电脑说谎的次数
+const int A=1;
+const int B=5; //单次说谎的概率为A/B 
+int x,a,i,c;
+bool f;
+int main(){
+	SetConsoleTitle(&quot;——由BIGBUG乱搞而成!&quot;);
+	srand(time(NULL));
+	x=rand()%N+1;c=C;
+	for(i=M;i&gt;=1;--i){
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;你还有&quot;&lt;&lt;i&lt;&lt;&quot;次机会!\n&quot;; 
+		cout&lt;&lt;&quot;猜数字(1-&quot;&lt;&lt;N&lt;&lt;&quot;)：&quot;;
+		cin&gt;&gt;a;
+		if(a!=x) f=a&gt;x;
+		else{cout&lt;&lt;&quot;正确!&quot;;break;}
+		if(c&gt;0&amp;&amp;rand()%B&lt;A) f=!f;
+		printf(&quot;错误!%d过%s了!&quot;,a,f?&quot;大&quot;:&quot;小&quot;);
+		Sleep(2000);
+	}
+	system(&quot;cls&quot;);
+	if(i==0) cout&lt;&lt;&quot;正解是&quot;&lt;&lt;x&lt;&lt;&quot;!&quot;;
+	else cout&lt;&lt;&quot;你成功使用&quot;&lt;&lt;M-i+1&lt;&lt;&quot;次机会猜出了答案!&quot;;
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[朱日和之战]]></title>
         <id>https://orzbigbug.github.io/post/zhu-ri-he-zhi-zhan/</id>
@@ -151,24 +194,6 @@
 <li>使用<code>wasd</code>进行移动。你已行动的步数将被显示。使用<code>k</code>键重置你的行动，你可以重新规划路线。按下<code>l</code>键，你的行动将被记录且不能再更改。</li>
 <li>完成移动后，使用<code>wasd</code>表示你要建的墙方位。在按下<code>l</code>键以前，你可以随时更改之，也可以按<code>k</code>重置建墙。确定以后，按下<code>l</code>键即可。</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[博客索引]]></title>
-        <id>https://orzbigbug.github.io/post/bo-ke-suo-yin/</id>
-        <link href="https://orzbigbug.github.io/post/bo-ke-suo-yin/">
-        </link>
-        <updated>2021-04-17T00:24:47.000Z</updated>
-        <content type="html"><![CDATA[<p>快速到达:</p>
-<p><a href="https://bigbug-233.blog.luogu.org/#type=%E6%B8%B8%E6%88%8F">游戏部分</a><br>
-<a href="https://bigbug-233.blog.luogu.org/#type=%E6%90%9E%E7%AC%91">搞笑部分</a><br>
-<a href="https://bigbug-233.blog.luogu.org/#type=%E9%A2%98%E8%A7%A3">题解部分</a></p>
-<hr>
-<h2 id="欢迎来到本蒟蒻的博客">欢迎来到本蒟蒻的博客</h2>
-<h3 id="蒟蒻的三国杀"><a href="https://www.luogu.com.cn/blog/BIGBUG-233/san-guo-sha">蒟蒻的三国杀</a></h3>
-<p>推荐一个游戏：<a href="https://bigbug-233.blog.luogu.org/xiao-you-hu">zrhzz</a></p>
-<p>斗图砖用：<a href="https://bigbug-233.blog.luogu.org/dou-tu-wu-qi-ku">dtwqk</a></p>
-<h3 id="推荐一个巨佬yrp">推荐一个巨佬：<a href="https://www.luogu.com.cn/user/23426">yrp</a></h3>
 ]]></content>
     </entry>
 </feed>
