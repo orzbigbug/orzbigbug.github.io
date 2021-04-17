@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://orzbigbug.github.io</id>
     <title>BIGBUG&apos;s blog</title>
-    <updated>2021-04-17T01:28:01.311Z</updated>
+    <updated>2021-04-17T01:41:54.637Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://orzbigbug.github.io"/>
     <link rel="self" href="https://orzbigbug.github.io/atom.xml"/>
@@ -10,6 +10,286 @@
     <logo>https://orzbigbug.github.io/images/avatar.png</logo>
     <icon>https://orzbigbug.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, BIGBUG&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[LG1495 【曹冲养猪】]]></title>
+        <id>https://orzbigbug.github.io/post/lg1495-cao-chong-yang-zhu/</id>
+        <link href="https://orzbigbug.github.io/post/lg1495-cao-chong-yang-zhu/">
+        </link>
+        <updated>2021-04-17T01:41:15.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="中国剩余定理">中国剩余定理</h1>
+<p>然而作者不会</p>
+<hr>
+<p>看到这题，先用暴力做了一下，死的很惨</p>
+<p>思路：考虑每一次建立猪圈的情况，把前面的最小公倍数求出来，</p>
+<h4 id="一个一个加">一个一个加</h4>
+<p>对，就是这样。</p>
+<p>还有，这题的答案可能很大，int会炸，long long就行了。</p>
+<hr>
+<p>代码：</p>
+<pre><code>#include&lt;algorithm&gt;
+#include&lt;iostream&gt;
+using namespace std;
+long long n,a[11],b[11],i,ans,c;
+//用long long定义
+long long zxgbs(long long a,long long b){
+	return a*b/ __gcd(a,b);
+    //__gcd(a,b):求最大公因数，要algorithm
+}
+//求最小公倍数
+int main(){
+	cin&gt;&gt;n;
+	for(i=1;i&lt;=n;i++)
+		cin&gt;&gt;a[i]&gt;&gt;b[i];
+    //输入部分，不说了
+	c=a[1];ans=b[1];
+    //第一次建立不用循环，直接写进去
+	for(i=2;i&lt;=n;i++)
+	{
+		for(;ans%a[i]!=b[i];) ans+=c;
+        //ans暴力往上加，加到符合这次的标准
+		c=zxgbs(c,a[i]);
+        //用函数把a[i]加进去，后面每次加的都要是这次的倍数
+	}
+	cout&lt;&lt;ans;
+    //输出结果
+	return 0;
+} 
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[LG1359 【租用游艇】]]></title>
+        <id>https://orzbigbug.github.io/post/lg1359-zu-yong-you-ting/</id>
+        <link href="https://orzbigbug.github.io/post/lg1359-zu-yong-you-ting/">
+        </link>
+        <updated>2021-04-17T01:39:35.000Z</updated>
+        <content type="html"><![CDATA[<p>这道题是一道dp题，。</p>
+<hr>
+<p>首先，我们要先存图。</p>
+<p>看看样例吧：</p>
+<pre><code>3
+5 15
+7
+</code></pre>
+<p>显然，5和15是中转站1到2和3的价钱，而7是2到3的价钱。我们可以用a数组来存，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>的价钱。（左边表示出发站，右边表示到达站）</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>中转站1</th>
+<th>中转站2</th>
+<th>中转站3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中转站1</td>
+<td>0</td>
+<td>5</td>
+<td>15</td>
+</tr>
+<tr>
+<td>中转站2</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+</tr>
+<tr>
+<td>中转站3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span>数组来记录这个中转站到n号中转站的最小价钱，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>表示中转站<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到中转站<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>的最小价钱。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>中转站1</th>
+<th>中转站2</th>
+<th>中转站3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最小价钱</td>
+<td>12</td>
+<td>7</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>我们要用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>上流的中转站从大到小跑一遍。我们先记录中转站2到中转站3的最小价钱，我们要用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>跑一遍中转站2下流的所有中转站，记录<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]+dp[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>的最小价钱,记录到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>里面。</p>
+<p>附上代码：</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+using namespace std;
+int a[201][201],i,j,n,dp[201];
+int main(){
+	cin&gt;&gt;n;
+	for(i=1;i&lt;n;i++){
+		for(j=i+1;j&lt;=n;j++)
+			cin&gt;&gt;a[i][j];
+		dp[i]=1e9;//初始化数组dp，使它
+	}
+	for(i=n-1;i&gt;=1;i--)//跑n上流的中转站
+		for(j=i+1;j&lt;=n;j++)//跑i下流的所有中转站
+			dp[i]=min(dp[i],a[i][j]+dp[j]);//记录
+	cout&lt;&lt;dp[1];
+	return 0;
+}
+</code></pre>
+<p>PS：蒟蒻的题解，大佬勿喷！<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mi>w</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">qwq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[LG1352 【没有上司的舞会】]]></title>
+        <id>https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/</id>
+        <link href="https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/">
+        </link>
+        <updated>2021-04-17T01:37:42.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<p>这题可以看做一颗树，因为不会有人上司的上司是自己。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">d[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人及他的下属的最高快乐指数和。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人的第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>个下属。</p>
+<p>每个人如果选上,他的下属就不能选上，要的就是他下属的下属的最优值，这样就没有直接上司了</p>
+<p>如果不选上，他的下属就可以选上，要他下属的最优值</p>
+<p>考虑继承快乐指数和最大的一种</p>
+<p>代码如下:（不要抄袭）</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+using namespace std;
+const int N=76801;
+int h[6001],n,i,a[6001][5000],x,y,d[6001],m;
+int dfs(int root,int s){
+	if(s==0){
+		if(d[root]==N)
+			d[root]=max(dfs(root,1),dfs(root,2)+h[root]);
+            //继承最好状态
+		return d[root];
+	}
+	int l=0;
+	for(int j=1;j&lt;=a[root][0];j++)
+		l+=dfs(a[root][j],s-1);
+   //枚举他的下属
+	return l;
+}
+int main(){
+	cin&gt;&gt;n;
+	for(i=1;i&lt;=n;i++){
+		cin&gt;&gt;h[i];
+		d[i]=N;
+        //赋初值
+	}	
+	cin&gt;&gt;x&gt;&gt;y;
+	while(x!=0||y!=0){
+		a[y][++a[y][0]]=x;
+		cin&gt;&gt;x&gt;&gt;y;
+	}
+	for(i=1;i&lt;=n;i++){
+		if(d[i]==N)
+			d[i]=dfs(i,0);
+        //枚举顶头上司
+		m=max(m,d[i]);
+	}
+	cout&lt;&lt;m;
+	return 0;	
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[LG1625 【求和】]]></title>
+        <id>https://orzbigbug.github.io/post/lg1625-qiu-he/</id>
+        <link href="https://orzbigbug.github.io/post/lg1625-qiu-he/">
+        </link>
+        <updated>2021-04-17T01:36:24.000Z</updated>
+        <content type="html"><![CDATA[<p>已经求得</p>
+<p>原式<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mi>m</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>(</mo><mfrac><mn>1</mn><mrow><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mi>i</mi></mrow></mfrac><mo>−</mo><mfrac><mn>1</mn><mrow><msubsup><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mi>i</mi></mrow></mfrac><mo>)</mo></mrow><annotation encoding="application/x-tex">=\dfrac{1}{m+1}(\dfrac{1}{\prod_{i=1}^{m-1}i}-\dfrac{1}{\prod_{i=n+1}^{n+m-1}i})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.4651579999999997em;vertical-align:-1.143718em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.155992em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.143718em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.523489em;vertical-align:-1.2020490000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.155992em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∏</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.954008em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35804100000000005em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2020490000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span></span></p>
+<p>计算这个分数需要高精，所以可以使用python3</p>
+<p>可以发现，两个求积公式可以一起进行计算</p>
+<p>得到代码：</p>
+<pre><code>import math
+n,m=map(int,input().split())
+a=1
+b=1
+for i in range(1,m):
+    a*=i
+    b*=i+n
+x=b-a
+y=a*b*(m-1)
+t=math.gcd(x,y)
+x//=t
+y//=t
+print(x)
+print(y)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CF911E  【Stack Sorting】]]></title>
+        <id>https://orzbigbug.github.io/post/cf911e-stack-sorting/</id>
+        <link href="https://orzbigbug.github.io/post/cf911e-stack-sorting/">
+        </link>
+        <updated>2021-04-17T01:35:33.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="题目大意">题目大意</h3>
+<p>一个排列有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个数，经过一个栈调整顺序之后能够按<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1-n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>顺序输出。给出它的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，要补全整个排列，且使其字典序最大。</p>
+<hr>
+<p>这里我们由一个数据开始探究：</p>
+<pre><code>10 6
+1 3 2 9 4 7
+</code></pre>
+<p>根据题意，给出的会是排列的前<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数，所以直接输出。</p>
+<p>可以对给出的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数进行处理，把可以整理的数直接整理。</p>
+<p>模拟输入之后可以发现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">1-4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>已经整理好了，栈中剩下两个数<code>9 7</code>。</p>
+<p>如果这时候栈中不是一个下降的序列，可以发现此时无解，直接输出<code>-1</code>。</p>
+<p>对于数据来说，还有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">5-10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span>没有输出。</p>
+<p>此时要把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span>给移除的话，必须先输出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>−</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">5-6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span>，又要求字典序最大，此时可以从大到小输出。</p>
+<p>于是你发现一个规律，然后你可以用一个生动形象的图来表示它：</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/42bhy5qj.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>于是我们得出了代码：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=200005;
+int n,k,i,j,a[N],b[N],p,d;
+bool f=0;
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
+	for(i=1;i&lt;=k;++i){
+		scanf(&quot;%d&quot;,&amp;a[i]);
+		b[++p]=a[i];
+		while(b[p]==d+1) ++d,--p;
+	}
+	for(i=2;i&lt;=p;++i)
+		if(b[i]&gt;b[i-1]) f=1;
+	if(f) printf(&quot;-1&quot;);
+	else{
+		b[p+1]=d;
+		for(i=1;i&lt;=k;++i) printf(&quot;%d &quot;,a[i]);
+		for(i=p;i&gt;=1;--i)
+			for(j=b[i]-1;j&gt;b[i+1];--j) printf(&quot;%d &quot;,j);
+		for(i=n;i&gt;b[1];--i) printf(&quot;%d &quot;,i);
+	}
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[有意思的东西]]></title>
+        <id>https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/</id>
+        <link href="https://orzbigbug.github.io/post/you-yi-si-de-dong-xi/">
+        </link>
+        <updated>2021-04-17T01:29:43.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/pic/68626.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/pic/69528.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2631292033,154052156&amp;fm=26&amp;gp=0.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://cdn.luogu.com.cn/upload/pic/60889.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[斗图武器库]]></title>
         <id>https://orzbigbug.github.io/post/dou-tu-wu-qi-ku/</id>
@@ -382,6 +662,22 @@
 <p>我疑心这是极好的文章，因为膜到这里，他总是微笑起来，而且将头仰起，摇着，向后面拗过去，拗过去。</p>
 <p>先生膜拜入神的时候，于我们是很相宜的。有几个便用纸糊的键盘套在电脑上敲代码。我是画画儿，用一种叫作“荆川纸”的，蒙在郑熠的绣像上一个个描下来，象习字时候的影写一样。读的书多起来，画的画也多起来；书没有读成，画的成绩却不少了，最成片断的是《郑熠传》和《郑熠AK记》的绣像，都有一大本。后来，因为要钱用，卖给一个有钱的蒟蒻了。他的父亲是开锡箔店的；听说现在自己已经做了店主，而且快要升到蓝名的地位了。这东西早已流传千古了罢。 九月十八日</p>
 <hr>
+<p>---下面我给大家推荐几部电影---}<br>
+【这个手刹不太灵】}<br>
+【泰尼号坦克】}<br>
+【哈利波特与凤凰传奇】}<br>
+【妇产科联盟】}<br>
+【变形钢筋4】}<br>
+【家乐福海盗】}<br>
+【魂断蓝翔】}<br>
+【忠犬洪七公】}<br>
+【梁山伯与朱丽叶】}<br>
+【大侦探福尔马斯】}<br>
+【拯救大兵张嘎】}<br>
+【唐伯虎点蚊香】}<br>
+【决战杀马特】}<br>
+【钢筋侠】}<br>
+【午夜闹铃】}</p>
 ]]></content>
     </entry>
     <entry>
@@ -471,103 +767,6 @@ int main(){
 <p><a href="https://wj.qq.com/s2/5238404/5987/">一份问卷调查</a></p>
 <p><a href="https://share.weiyun.com/5IJ7wOo-g">可以加入共享组</a></p>
 <p>//联机版好像只能在内网里面连接</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[爆炸棋]]></title>
-        <id>https://orzbigbug.github.io/post/bao-zha-qi/</id>
-        <link href="https://orzbigbug.github.io/post/bao-zha-qi/">
-        </link>
-        <updated>2021-04-17T00:52:13.000Z</updated>
-        <content type="html"><![CDATA[<p>爆炸棋 v1.1.1</p>
-<p>应<a href="https://www.luogu.com.cn/user/174557">dove1242</a>的要求，把这个游戏代码实现了。。。</p>
-<p>更新の日志：</p>
-<pre><code>7.24 爆炸棋第一版发布
-7.25 增加提示语
-7.25 改掉了无限爆炸的问题
-8.02 修改参数错误，加快50后爆炸节奏 
-</code></pre>
-<p>腾讯微云：<a href="https://share.weiyun.com/yrKbCKSj">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/13BYohueTF8QrwMEoOVJBpw">点击这里</a> 提取码: 1ijx</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/iQa1Gnd6oxe">点击这里</a><br>
-密码:i02o</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<p>规则~~（复制警告）~~：</p>
-<p>获胜方法：场上其他人都没有棋子时获胜。<br>
-游戏规则：在棋盘上布置一个棋子，每个棋子都有不一样的引爆数量，俗称“金角银边铜肚皮”，其意思是角落的价值最高，只需要两个棋子就能引爆。引爆后棋子会朝四周四散方块，其他颜色的棋子被我方棋子爆开的碎片打中后会变成没有颜色的空位，如果碎片刚好落到了其他颜色的只剩一个就会引爆的棋子上，则会继续触发引爆，不过颜色变成了你的颜色。控制得到可以引起连环爆炸，反败为胜。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[三国杀]]></title>
-        <id>https://orzbigbug.github.io/post/san-guo-sha/</id>
-        <link href="https://orzbigbug.github.io/post/san-guo-sha/">
-        </link>
-        <updated>2021-04-17T00:51:19.000Z</updated>
-        <content type="html"><![CDATA[<p>三国杀 v1.3.0</p>
-<p>更新の日志：</p>
-<pre><code>8.17 防具集体出锅
-8.17 顺牵，过拆拿装备时出锅
-8.17 桃的数量多了10张！减了
-8.17 显示错误(人工智障果然智障)
-8.17 对人工智障的研究/强化
-8.18 闪电出锅！一出闪电，必遭雷劈
-8.18 强化人工智障，增加伤害显示
-8.18 改掉麒麟弓BUG，优化显示界面
-8.18 论丈八蛇矛的深入使用,-1使用丈八蛇矛
-10.20 修复了一些问题
-2.5 修复了三个BUG
-</code></pre>
-<p>BUG列表：</p>
-<pre><code>20210205 闪电被无懈后不转移     -xutongwei
-20210205 敌人不能用丈八响应决斗 -xutongwei
-20210205 我方贯石斧不能正常使用 -BIGBUG
-未修复   [杀]被装备为防御马?    -xutongwei
-</code></pre>
-<p>预计の更新：</p>
-<pre><code>1、加入卡牌点数
-2、多人机玩法（误 
-</code></pre>
-<hr>
-<h3 id="标准版">标准版</h3>
-<p>腾讯微云：<a href="https://share.weiyun.com/dtnFqgoM">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/1ie9UhxNH0jaDJWJHtyGq0A">点击这里</a> 提取码: nrxv</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/ib8Lond6ozg">点击这里</a> 密码:5nn1</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[困兽]]></title>
-        <id>https://orzbigbug.github.io/post/kun-shou/</id>
-        <link href="https://orzbigbug.github.io/post/kun-shou/">
-        </link>
-        <updated>2021-04-17T00:50:48.000Z</updated>
-        <content type="html"><![CDATA[<p>困兽 v1.0.3</p>
-<p>更新の日志：</p>
-<pre><code>3.27 发布
-3.27 修改颜色问题
-3.27 增设平局
-</code></pre>
-<hr>
-<p>腾讯微云：<a href="https://share.weiyun.com/2YNVJFIx">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/1wSFDzRIwAufHahP3SH3ELw">点击这里</a> 提取码: m372</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/iLfeXndpo5a">点击这里</a><br>
-密码:bxso</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<h2 id="交流qq群808365960-蒟蒻集散地">交流QQ群：808365960 蒟蒻集散地</h2>
-<hr>
-<h3 id="规则说明">规则说明</h3>
-<p>7*7的棋盘，两个棋手分别操作两个棋子，位于左上角和右下角。双方轮流进行，左上角的棋手先行执行回合。一回合包括：</p>
-<ul>
-<li>将棋子<strong>移动0-3步</strong>。你的移动不应越过一堵墙。注意，你仅可以经过对方所在格而<strong>不能停留在其上</strong>。</li>
-<li>移动完成后，你<strong>可以也必须</strong>在该位置四周选择一个方向建造一堵墙，建造完成后双方经过都将受到阻挡。你可以把墙建在棋盘的边缘处，但你不可以把墙建在已经存在的墙上。</li>
-</ul>
-<p>一名玩家执行完成后，会检查两棋子所在位置是否还<strong>相通</strong>。如果不相通，游戏将结束并进行结算。计算两棋子<strong>可活动范围</strong>，范围较大者将获得胜利。</p>
-<h3 id="操作说明">操作说明</h3>
-<ul>
-<li>使用<code>wasd</code>进行移动。你已行动的步数将被显示。使用<code>k</code>键重置你的行动，你可以重新规划路线。按下<code>l</code>键，你的行动将被记录且不能再更改。</li>
-<li>完成移动后，使用<code>wasd</code>表示你要建的墙方位。在按下<code>l</code>键以前，你可以随时更改之，也可以按<code>k</code>重置建墙。确定以后，按下<code>l</code>键即可。</li>
-</ul>
 ]]></content>
     </entry>
 </feed>

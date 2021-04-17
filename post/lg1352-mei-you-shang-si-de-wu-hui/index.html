@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>爆炸棋 | BIGBUG&#39;s blog</title>
+  <title>LG1352 【没有上司的舞会】 | BIGBUG&#39;s blog</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://orzbigbug.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://orzbigbug.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="爆炸棋 | BIGBUG&#39;s blog » Feed" href="https://orzbigbug.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="LG1352 【没有上司的舞会】 | BIGBUG&#39;s blog » Feed" href="https://orzbigbug.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://orzbigbug.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="爆炸棋"/>
-    <meta property="og:url" content="https://orzbigbug.github.io/post/bao-zha-qi/"/>
+    <meta property="og:description" content="LG1352 【没有上司的舞会】"/>
+    <meta property="og:url" content="https://orzbigbug.github.io/post/lg1352-mei-you-shang-si-de-wu-hui/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="BIGBUG&#39;s blog"/>
@@ -80,10 +80,10 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://orzbigbug.github.io/tag/youxi/" class="tag">游戏</a>
+            <a href="https://orzbigbug.github.io/tag/tijie/" class="tag">题解</a>
             
         </span>
-            <h1>爆炸棋</h1>
+            <h1>LG1352 【没有上司的舞会】</h1>
             <span class="meta">
             	Posted on
               2021-04-17，2 min read
@@ -99,28 +99,60 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>爆炸棋 v1.1.1</p>
-<p>应<a href="https://www.luogu.com.cn/user/174557">dove1242</a>的要求，把这个游戏代码实现了。。。</p>
-<p>更新の日志：</p>
-<pre><code>7.24 爆炸棋第一版发布
-7.25 增加提示语
-7.25 改掉了无限爆炸的问题
-8.02 修改参数错误，加快50后爆炸节奏 
+          <!-- more -->
+<p>这题可以看做一颗树，因为不会有人上司的上司是自己。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">d[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人及他的下属的最高快乐指数和。</p>
+<p>用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>来描述第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个人的第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>个下属。</p>
+<p>每个人如果选上,他的下属就不能选上，要的就是他下属的下属的最优值，这样就没有直接上司了</p>
+<p>如果不选上，他的下属就可以选上，要他下属的最优值</p>
+<p>考虑继承快乐指数和最大的一种</p>
+<p>代码如下:（不要抄袭）</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+using namespace std;
+const int N=76801;
+int h[6001],n,i,a[6001][5000],x,y,d[6001],m;
+int dfs(int root,int s){
+	if(s==0){
+		if(d[root]==N)
+			d[root]=max(dfs(root,1),dfs(root,2)+h[root]);
+            //继承最好状态
+		return d[root];
+	}
+	int l=0;
+	for(int j=1;j&lt;=a[root][0];j++)
+		l+=dfs(a[root][j],s-1);
+   //枚举他的下属
+	return l;
+}
+int main(){
+	cin&gt;&gt;n;
+	for(i=1;i&lt;=n;i++){
+		cin&gt;&gt;h[i];
+		d[i]=N;
+        //赋初值
+	}	
+	cin&gt;&gt;x&gt;&gt;y;
+	while(x!=0||y!=0){
+		a[y][++a[y][0]]=x;
+		cin&gt;&gt;x&gt;&gt;y;
+	}
+	for(i=1;i&lt;=n;i++){
+		if(d[i]==N)
+			d[i]=dfs(i,0);
+        //枚举顶头上司
+		m=max(m,d[i]);
+	}
+	cout&lt;&lt;m;
+	return 0;	
+}
 </code></pre>
-<p>腾讯微云：<a href="https://share.weiyun.com/yrKbCKSj">点击这里</a></p>
-<p>百度网盘：<a href="https://pan.baidu.com/s/13BYohueTF8QrwMEoOVJBpw">点击这里</a> 提取码: 1ijx</p>
-<p>蓝奏云：<a href="https://wws.lanzous.com/iQa1Gnd6oxe">点击这里</a><br>
-密码:i02o</p>
-<h3 id="洛谷下载"><a href="https://www.luogu.com.cn/problem/U127598">洛谷下载</a></h3>
-<p>规则~~（复制警告）~~：</p>
-<p>获胜方法：场上其他人都没有棋子时获胜。<br>
-游戏规则：在棋盘上布置一个棋子，每个棋子都有不一样的引爆数量，俗称“金角银边铜肚皮”，其意思是角落的价值最高，只需要两个棋子就能引爆。引爆后棋子会朝四周四散方块，其他颜色的棋子被我方棋子爆开的碎片打中后会变成没有颜色的空位，如果碎片刚好落到了其他颜色的只剩一个就会引爆的棋子上，则会继续触发引爆，不过颜色变成了你的颜色。控制得到可以引起连环爆炸，反败为胜。</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://orzbigbug.github.io/post/san-guo-sha/">
+            <a href="https://orzbigbug.github.io/post/lg1625-qiu-he/">
               <span class="post-title">
-                三国杀&rarr;
+                LG1625 【求和】&rarr;
               </span>
             </a>
           </p>
